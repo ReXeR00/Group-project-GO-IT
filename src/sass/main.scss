@@ -1,11 +1,9 @@
-
 /*
  * Główny plik dla stylów.
  * Wszystkie partials podłączamy tutaj.
  */
 
 // Style dla pliku z przykładem HTML fragmentu
-@import './example';
 @import '/src/sass/utils/variables.scss';
 @import '/src/sass/utils/breakpoints.scss';
 @import '/src/sass/utils/global.scss';
