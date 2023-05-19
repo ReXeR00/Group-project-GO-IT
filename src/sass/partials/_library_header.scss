@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.menu__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__nav {
+  display: flex;
+  column-gap: 40px;
+}
+
+.header__nav {
+  list-style: none;
+  color: #fff;
+}
+
+.header__nav-link--is-active {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 19px;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 3px;
+    background-color: #ff001b;
+  }
+}
+
+.library__btns-wrapper {
+  display: flex;
+}
+.library__btns {
+  display: flex;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  margin-top: 40px;
+  gap: 20px;
+}
+
+.library__btn {
+  width: 129px;
+  padding: 13px 36px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.library__btn--onclick {
+  background: #ff6b01;
+  border-radius: 5px;
+  border-style: none;
+  filter: drop-shadow(0px 8px 43px rgba(255, 107, 1, 0.6));
+}
+
+.library__container {
+  margin-top: 40px;
+  padding: 20px;
+  align-items: bottom;
+}
+
+.library__wrapper {
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+}
+
+// PHONE //
+@media (max-width: 767px) {
+  .library__wrapper {
+    background-image: url('/src/images/bg-mobile-library.jpg');
+    padding: 44px 20px;
+    height: 230px;
+  }
+
+  .header__name {
+    display: none;
+  }
+}
+
+// TABLET //
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  .library__wrapper {
+    background-image: url('/src/images/bg-tablet-library.jpg');
+    padding: 40px 32px 45px;
+    height: 216px;
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 500px;
+    line-height: 35.16px;
+  }
+
+  .library__btns {
+    gap: 40px;
+  }
+  .library__btn {
+    width: 152px;
+  }
+}
+
+// DESKTOP //
+@media screen and (min-width: 1200px) {
+  .library__wrapper {
+    background-image: url('/src/images/bg-desktop-library.jpg');
+    padding: 49px 32px 44px;
+    height: 216px;
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 500px;
+    line-height: 35.16px;
+  }
+  .library__btns {
+    gap: 16px;
+  }
+  .library__btn {
+    width: 148px;
+    padding: 11px 36px;
+  }
+}
