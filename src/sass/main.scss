@@ -1,8 +1,7 @@
-
-@import '/src/sass/utils/variables.scss';
-@import '/src/sass/utils/breakpoints.scss';
-@import '/src/sass/utils/global.scss';
-@import './partials/movies';
+@import '/src/sass/utils/_variables.scss';
+@import '/src/sass/utils/_breakpoints.scss';
+@import '/src/sass/utils/_global.scss';
+@import '/src/sass/partials/_movies.scss';
 @import '/src/sass/partials/_main_header.scss';
 @import '/src/sass/utils/_vars.scss';
 @import '/src/sass/partials/_library_header.scss';
