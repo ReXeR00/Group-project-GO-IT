@@ -2,28 +2,27 @@ import axios from 'axios';
 import { genreList, fetchGenres } from './fetchGenres';
 import { URL, API_KEY, API_trendingMovies } from './variables';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const moviesListEl = document.querySelector('.movies__list');
+const moviesListEl = document.querySelector('.movies__list');
 
-  const getPopular = async () => {
-    try {
-      const result = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
-      await fetchGenres();
-      renderPopular(result.data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+const getPopular = async () => {
+  try {
+    const result = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
+    await fetchGenres();
+    renderPopular(result.data.results);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-  const renderPopular = movies => {
-    movies.forEach(movie => {
-      const posterPath = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-      const releaseYear = new Date(movie.release_date).getFullYear();
-      const genreNames = movie.genre_ids
-        .slice(0, 3)
-        .map(genreId => genreList[genreId])
-        .join(', ');
-      const movieEl = `
+const renderPopular = movies => {
+  movies.forEach(movie => {
+    const posterPath = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    const releaseYear = new Date(movie.release_date).getFullYear();
+    const genreNames = movie.genre_ids
+      .slice(0, 3)
+      .map(genreId => genreList[genreId])
+      .join(', ');
+    const movieEl = `
         <li class="movies__element">
           <figure>
             <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
@@ -35,9 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </li>
       `;
 
-      moviesListEl.insertAdjacentHTML('beforeend', movieEl);
-    });
-  };
+    moviesListEl.insertAdjacentHTML('beforeend', movieEl);
+  });
+};
 
-  getPopular();
-});
+getPopular();
