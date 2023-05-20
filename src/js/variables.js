@@ -1,28 +1,29 @@
 import axios from 'axios';
 
-export const URL = 'https://api.themoviedb.org/';
-export const API_KEY = '9cd3003f00fa34df086a65205d0cd538';
+export const URL = `https://api.themoviedb.org/`;
+export const API_KEY = `9cd3003f00fa34df086a65205d0cd538`;
 
-export const API_trendingMovies = '3/trending/all/day';
-export const API_searchMovies = '3/search/movie';
-export const API_detailsMovies = '3/movie';
-export const API_videosMovies = '3/movie';
+export const API_trendingMovies = '3/trending/get-trending';
+export const API_searchMovies = '3/search/search-movies';
+export const API_detailsMovies = '3/movies/get-movie-details';
+export const API_videosMovies = '3/movies/get-movie-videos';
 
 // w tych 3 pozycjach info wyświetlane są w taki sam sposób
-// https://api.themoviedb.org/3/trending/all/day
-// https://api.themoviedb.org/3/search/movie
-// https://api.themoviedb.org/3/movie
+// https://api.themoviedb.org/3/trending/get-trending
+// https://api.themoviedb.org/3/search/search-movies
+// https://api.themoviedb.org/3/movies/get-movie-details
+// https://api.themoviedb.org/3/movies/get-movie-videos
 
 // ${title} - tytuł filmu
 // ${overview} - opis/ about
 // ${poster_path} - trzeba wcześniej dodać jeszcze ścieżkę https://image.tmdb.org/t/p/original (zgodnie z info https://developer.themoviedb.org/docs/image-basics)
 // ${vote_average} - ocena / ${vote_count} - liczbę głosów
-// $popularity} - popularność
+// ${popularity} - popularność
 // ${original_title} - oryginalny tytuł filmu
-// ${genre_ids} - gatunek, ale podaje go jako nr. znaczenie numeru  jest tu:
+// ${genre_ids} - gatunek, ale podaje go jako nr. Znaczenie numeru jest tu:
 
 // https://api.themoviedb.org/3/genre/movie/list
-// ${generes.name}
+// ${genres.name}
 
 const inputSearchEl = document.getElementById('search_input');
 
@@ -41,6 +42,3 @@ export async function fetchMovies(query, page) {
     console.log(error.status);
   }
 }
-
-// Exportujemy funkcję fetchMovies, która wysyła zapytanie do API z podanym zapytaniem (query) i numerem strony (page).
-// Otrzymujemy odpowiedź (response), która może być następnie przetworzona i wykorzystana w dalszej części kodu.
