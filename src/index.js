@@ -1,2 +1,2 @@
-import './js/movies';
 import './js/variables';
+import './js/trending';
