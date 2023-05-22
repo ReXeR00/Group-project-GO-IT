@@ -3,10 +3,18 @@ import axios from 'axios';
 export const URL = `https://api.themoviedb.org/`;
 export const API_KEY = `9cd3003f00fa34df086a65205d0cd538`;
 
-export const API_trendingMovies = '3/trending/get-trending';
+export const API_trendingMovies = '3/trending/movie/week?api_key=';
 export const API_searchMovies = '3/search/search-movies';
 export const API_detailsMovies = '3/movies/get-movie-details';
 export const API_videosMovies = '3/movies/get-movie-videos';
+
+export const genreList = {
+  16: 'Animation',
+  10751: 'Family',
+  12: 'Adventure',
+  14: 'Fantasy',
+  35: 'Comedy',
+};
 
 // w tych 3 pozycjach info wyświetlane są w taki sam sposób
 // https://api.themoviedb.org/3/trending/get-trending
