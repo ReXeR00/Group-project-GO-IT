@@ -13,6 +13,11 @@
     &--modal{
       width: calc(100% - 40px);
       padding: 48px 0 40px 0;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 20px;
     }
   }
 
@@ -60,11 +65,24 @@
     border: 1px solid black;
 
   }
+
+&__data{
+  &--modal{
+    list-style: none;
+    display: flex;
+    text-align: start;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+  }
+}
+
   &__modal {
     display: flex;
     flex-direction:column ;
     align-items: center;
     justify-content: center;
+    overflow: scroll;
     width: calc(100% - 40px);
     // padding: 48px 0 40px 0;
     background: $modal-bg;
@@ -96,12 +114,11 @@ left: 100px
   }
 }
 
-&__info{
+&__info {
   display: flex;
   flex-direction: column;
   row-gap: 8px;
- justify-content: space-between;
- align-items: start;
+ text-align: start;
 }
 
 &__property{
@@ -165,6 +182,7 @@ left: 100px
     }
     &__modal {
       width: calc(100% - 64px);
+      flex-direction: row;
     
     // &--button{
     //   top: 130px;
