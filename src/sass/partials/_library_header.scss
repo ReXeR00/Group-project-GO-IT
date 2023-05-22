@@ -62,7 +62,19 @@
   border: 1px solid #ffffff;
   border-radius: 5px;
   cursor: pointer;
+&--modal{
+  color: $white;
+  padding: 6px 14px;
+  background: #ff6b01;}
+
+&--modalqueue{
+  color: $black;
+  padding: 6px 14px;
+  background: $white;
+  }
 }
+
+
 
 .library__btn--onclick {
   background: #ff6b01;
