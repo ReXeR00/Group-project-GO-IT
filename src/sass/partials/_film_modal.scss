@@ -211,7 +211,7 @@
   }
   
   .film-button__primary {
-    // @extend %button;
+   
     box-sizing: border-box;
   
     min-width: 110px;
@@ -256,24 +256,3 @@
     }
   }
   
-  .icon-close {
-    width: 14px;
-    height: 14px;
-  
-    fill: $black;
-  
-    transition-property: fill;
-    transition-duration: 250ms;
-    transition-timing-function: ease;
-  }
-  
-  .is-disabled {
-    background-color: rgb(180, 180, 180);
-    color: white;
-    border: 1px solid rgb(180, 180, 180);
-  }
-  
-  .is-disabled:hover {
-    background-color: rgb(180, 180, 180);
-    border: 1px solid rgb(180, 180, 180);
-  }
