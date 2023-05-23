@@ -1,3 +1,6 @@
-// import './sass/main.scss';
-// import './js/movies';
-// // import './js/variables'
+import './js/movies';
+import './js/modal-team';
+import './js/variables';
+import './js/trending';
+import './js/trending';
+import './js/modalMovie';
