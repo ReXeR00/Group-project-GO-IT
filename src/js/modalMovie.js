@@ -3,21 +3,6 @@ import { fetchFilmDetailsById } from "./fetchDetails";
 
 console.log(`hello`);
 
-// (() => {
-//     const refs = {
-//       openModalBtn: document.querySelector("[data-modal-open]"),
-//       closeModalBtn: document.querySelector("[data-modal-close]"),
-//       modal: document.querySelector("[data-modal]"),
-//     };
-  
-//     refs.openModalBtn.addEventListener("click", toggleModal);
-//     refs.closeModalBtn.addEventListener("click", toggleModal);
-  
-//     function toggleModal() {
-//       refs.modal.classList.toggle("is-hidden");
-//     }
-//   })();
-
 
 // otwieranie okna modalnego
 const refs = {
@@ -27,13 +12,7 @@ const refs = {
     filmModal: document.querySelector('[data-modal]'),
 
   };
-  
-    // refs.openModalBtn.addEventListener("click", toggleModal);
-    // refs.closeModalBtn.addEventListener("click", toggleModal);
-  
-    // function toggleModal() {
-    //   refs.modal.classList.toggle("is-hidden");
-    // }
+
  
 // dane które chcemy otrzymać w zależności od id
   let filmDetails = {}
@@ -50,8 +29,11 @@ async function galleryBoxClick(event) {
         return;
     }
 
-    const filmId= Number(event.target.closest('.movies__element').id);
+    const filmId= event.currentTarget.dataset.id
+    console.log(filmId);
+    // const filmId= Number(event.target.closest('.movies__element').id);
 
+// 
     let searchIdDetails = searchId.find(film => film.id === filmId)
 
 if(searchIdDetails) {
@@ -75,7 +57,8 @@ renderFilmModal(filmDetails);
 
 
 // układ okna modalnego
-function createFilmModalMarkup(data) {
+function createFilmModalMarkup (data) {
+   
     const {
       poster_path,
       title,
@@ -98,7 +81,7 @@ function createFilmModalMarkup(data) {
         class="film__image"
         src="${posterUrl}"
         alt="Film Image"
-        onerror="loadNoPoster(this)"
+        
       />
       <article>
         <div class="film__content">
@@ -173,5 +156,6 @@ function createFilmModalMarkup(data) {
 //   to miało renderować okno modalne
   function renderFilmModal(data) {
     const fiimModalMarkup = createFilmModalMarkup(data);
+    // const fiimModalMarkup = createFilmModalMarkup(data);
     refs.filmModal.insertAdjacentHTML('beforeend', fiimModalMarkup);
   }
