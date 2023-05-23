@@ -1,8 +1,12 @@
 import { fetchFilmDetailsById } from './fetchDetails';
 
+
 const refs = {
-  galleryBox: document.querySelector('[data-modal-open]'),
+  // galleryBox: document.querySelector('[data-modal-open]'),
+  galleryBox: document.querySelector('.movies__list'),
   filmModal: document.querySelector('[data-modal]'),
+  // closeBtn: document.querySelector('[data-modal-close]'),
+
   searchId: [],
   filmDetails: {},
 };
@@ -10,7 +14,7 @@ const refs = {
 refs.galleryBox.addEventListener('click', galleryBoxClick);
 
 async function galleryBoxClick(event) {
-  if (event.target.classList.contains('modal-open')) {
+  if (event.target.classList.contains('.movies__list')) {
     return;
   }
 
@@ -59,7 +63,7 @@ function createFilmModalMarkup(data) {
   console.log(title);
   console.log(posterPath);
   const movieEl = `
-    <div class="film-modal">
+    <div class="film-modal" >
       <button class="button-close" type="button" button-modal-close>
        X
       </button>

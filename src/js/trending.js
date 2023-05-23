@@ -24,7 +24,7 @@ const renderPopular = movies => {
       .join(', ');
 
     const movieEl = `
-  <li class="movies__element" data-id="${movie.id}">
+  <li class="movies__element" data-id="${movie.id}" >
     <figure>
       <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
       <figcaption>
