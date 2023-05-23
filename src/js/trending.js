@@ -7,11 +7,14 @@ const moviesListEl = document.querySelector('.movies__list');
 
 const getPopular = async () => {
   try {
+    displayLoader(loader);
     const result = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
     await fetchGenres();
     renderPopular(result.data.results);
   } catch (error) {
     console.error(error);
+  } finally {
+    displayLoader(loader);
   }
 };
 
