@@ -22,18 +22,19 @@ const renderPopular = movies => {
       .slice(0, 3)
       .map(genreId => genreList[genreId])
       .join(', ');
-    const movieEl = `
-        <li class="movies__element">
-          <figure>
-            <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
-            <figcaption>
-              <p class="movies__title">${movie.title}</p>
-              <p class="movies__type">${genreNames} | <span class="movies__year">${releaseYear}</span></p>
-            </figcaption>
-          </figure>
-        </li>
-      `;
 
+    const movieEl = `
+  <li class="movies__element" data-id="${movie.id}">
+    <figure>
+      <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
+      <figcaption>
+        <p class="movies__title">${movie.title}</p>
+        <p class="movies__type">${genreNames} | <span class="movies__year">${releaseYear}</span></p>
+      </figcaption>
+    </figure>
+  </li>
+`;
+    console.log('Movie:', movie);
     moviesListEl.insertAdjacentHTML('beforeend', movieEl);
   });
 };
