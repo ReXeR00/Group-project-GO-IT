@@ -23,25 +23,26 @@ async function galleryBoxClick(event) {
     searchIdDetails = refs.searchId.find(film => film.id == filmId);
   }
 
-  if (searchIdDetails) {
-    refs.filmDetails = searchIdDetails;
-  } else {
-    try {
-      const filmDetailsResponse = await fetchFilmDetailsById(filmId);
-      const filmDetails = filmDetailsResponse.data;
-      refs.filmDetails = filmDetails;
-      refs.searchId.push(filmDetails);
+  // if (searchIdDetails) {
+  //   refs.filmDetails = searchIdDetails;
+  // } else {
+  //   try {
+  const filmDetailsResponse = await fetchFilmDetailsById(filmId);
+  const filmDetails = filmDetailsResponse.data;
+  refs.filmDetails = filmDetails;
+  refs.searchId.push(filmDetails);
 
-      fetchFilmDetailsById(filmId).then(data => {
-        console.log('Response:', data);
-        refs.filmDetails = data;
-        clearFilmModalMarkup();
-        renderFilmModal(refs.filmDetails);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  //     fetchFilmDetailsById(filmId).then(data => {
+  //       console.log('Response:', data);
+  //       refs.filmDetails = data;
+  //       clearFilmModalMarkup();
+  //       renderFilmModal(refs.filmDetails);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
   renderFilmModal(refs.filmDetails);
   clearFilmModalMarkup();
 }

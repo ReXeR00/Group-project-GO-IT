@@ -7,13 +7,13 @@ export async function fetchFilmDetailsById(id) {
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`,
       {
         params: {
-          api_key: API_KEY,
+          // api_key: API_KEY,
           movie_id: id,
         },
       },
     );
-    console.log('fetchFilmDetailsById:', response.data);
-    return response.data;
+    // console.log('fetchFilmDetailsById:', response.data);
+    return response;
   } catch (error) {
     console.log(error);
     throw error;

@@ -34,7 +34,7 @@ const renderPopular = movies => {
     </figure>
   </li>
 `;
-    console.log('Movie:', movie);
+    // console.log('Movie:', movie);
     moviesListEl.insertAdjacentHTML('beforeend', movieEl);
   });
 };
