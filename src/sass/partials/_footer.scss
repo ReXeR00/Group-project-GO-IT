@@ -129,3 +129,69 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transform: scale(0.9);
   }
 }
+
+.team-wrapper {
+  position: absolute;
+  bottom: 0px;
+  right: 50%;
+  transform: translate(50%, -25%);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 20px;
+  width: 280px;
+
+  background-color: #d9afd9;
+  background-image: linear-gradient(0deg, #d9afd9 0%, #97d9e1 100%);
+
+  border-radius: 15px;
+
+  @media screen and (min-width: 768px) {
+    width: 700px;
+    transform: translate(50%, -50%);
+  }
+
+  @media screen and (min-width: 1260px) {
+    width: 870px;
+  }
+}
+
+.member-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: calc((100% - 30px) / 2);
+  transition: 250ms;
+
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+  }
+  @media screen and (min-width: 768px) {
+    width: calc(25% - 24px);
+  }
+}
+
+.member-image {
+  margin-bottom: 10px;
+
+  width: 100%;
+  height: auto;
+  border-radius: 10%;
+  box-shadow: 5px 5px 11px -2px $grey-second;
+}
+
+.member-name {
+  margin-bottom: 5px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.member-role {
+  color: #000000;
+  text-align: center;
+}
