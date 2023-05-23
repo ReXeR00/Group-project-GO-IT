@@ -26,10 +26,8 @@ const addToWatched = () => {
   const watchedMovies = getFromStorage(localStorageKeys.WATCHED);
 
   if (typeof watchedMovies !== 'undefined') {
-    // Wykonaj działania na odczytanych danych
     console.log(watchedMovies);
   } else {
-    // Dane nie są zdefiniowane, podejmij odpowiednie działania
     console.log('Brak zapisanych danych dla klucza WATCHED');
   }
 
@@ -42,10 +40,8 @@ const addToQueue = () => {
   const queueMovies = getFromStorage(localStorageKeys.QUEUE);
 
   if (typeof queueMovies !== 'undefined') {
-    // Wykonaj działania na odczytanych danych
     console.log(queueMovies);
   } else {
-    // Dane nie są zdefiniowane, podejmij odpowiednie działania
     console.log('Brak zapisanych danych dla klucza QUEUE');
   }
 
