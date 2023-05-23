@@ -17,7 +17,6 @@ const getPopular = async () => {
 
 const renderPopular = movies => {
   movies.forEach(movie => {
-    displayLoader(loader);
     const posterPath = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
     const releaseYear = new Date(movie.release_date).getFullYear();
     const genreNames = movie.genre_ids
@@ -35,7 +34,6 @@ const renderPopular = movies => {
           </figure>
         </li>
       `;
-    displayLoader(loader);
     moviesListEl.insertAdjacentHTML('beforeend', movieEl);
   });
 };
