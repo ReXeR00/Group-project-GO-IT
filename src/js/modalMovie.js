@@ -7,21 +7,7 @@ const refs = {
   searchId: [],
   filmDetails: {},
 };
-
-
-const btnRefs={
-   closeBtn: document.querySelector('.modal-close'),
-}
-
 refs.galleryBox.addEventListener('click', galleryBoxClick);
-
-
-if (btnRefs.btnClose) {
-  btnRefs.btnClose.addEventListener('click', onBackdropModalClick)
-}
-// btnRefs.btnClose.addEventListener('click', onBackdropModalClick)
-
-
 
 async function galleryBoxClick(event) {
   if (event.target.classList.contains('.movies__list')) {
@@ -39,14 +25,10 @@ async function galleryBoxClick(event) {
   const filmDetails = filmDetailsResponse.data;
   refs.filmDetails = filmDetails;
   refs.searchId.push(filmDetails);
-  refs.filmModal.classList.remove('is-hidden'), 
-  renderFilmModal(refs.filmDetails);
-  
+  refs.filmModal.classList.remove('is-hidden'), renderFilmModal(refs.filmDetails);
 }
 
 // clearFilmModalMarkup();
-
-
 
 function createFilmModalMarkup(data) {
   console.log('createFilmModalMarkup', data);
@@ -61,9 +43,8 @@ function createFilmModalMarkup(data) {
   console.log(posterPath);
   return `
     <div class="film-modal" >
-      <button class="button-close" type="button" value="click" button-modal-close>
-       X
-      </button>
+    <button class="button-close" type="button" button-modal-close>X</button>
+
       <img
         class="film__image"
         src="https://image.tmdb.org/t/p/w500/${posterPath}"
@@ -122,8 +103,6 @@ function createFilmModalMarkup(data) {
       </article>
     </div>
   `;
-
-
 }
 
 function renderFilmModal(data) {
@@ -132,39 +111,45 @@ function renderFilmModal(data) {
   refs.filmModal.insertAdjacentHTML('beforeend', fiimModalMarkup);
 }
 
-
-function clearFilmModalMarkup() {
-  refs.filmModal.innerHTML = '';
-  
-}
-
-function onModalClose() {
-  refs.filmModal.classList.add('is-hidden'), 
-  window.removeEventListener('keydown', onEscapePress)
-}
-
-// function onBackdropModalClick(e) {
-//   if (e.currentTarget === e.target) {
-//     onCloseModal();
-//   }
+// function clearFilmModalMarkup() {
+//   refs.filmModal.innerHTML = '';
 // }
 
-function onEscapePress (e) {
-  if(e.key === 'Escape') {
-    onModalClose()
+// ----> ZAMYKANIE
+const closeBtn = document.querySelector('.button-close');
+//closeBtn.addEventListener('click', closeModal);  <-- bład
 
+if (closeBtn) {
+  closeBtn.addEventListener('click', closeModal);
+}
+
+function closeModal() {
+  refs.filmModal.classList.add('is-hidden');
+  refs.filmModal.innerHTML = '';
+}
+
+function onModalClose(event) {
+  if (event.target.classList.contains('button-close')) {
+    refs.filmModal.classList.add('is-hidden');
   }
 }
 
+function onBackdropModalClick(event) {
+  if (event.currentTarget === event.target) {
+    closeModal();
+  }
+}
 
-// function onModalClose(event) {
-// if (event.target.classList.contains('button-modal-close')) {
-//   refs.filmModal.classList.add('is-hidden'), 
-//   window.removeEventListener('keydown', onEscapePress)
+function onEscapePress(event) {
+  if (event.key === 'Escape') {
+    closeModal();
+  }
+}
+
+// refs.closeBtn.addEventListener('click', function () {
+//   console.log(lol);
+// });
+
+// function onModalClose() {
+//   refs.filmModal.classList.add('is-hidden'), window.removeEventListener('keydown', onEscapePress);
 // }
- 
-// }
-
-
-
-
