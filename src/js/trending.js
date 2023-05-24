@@ -1,16 +1,20 @@
 import axios from 'axios';
 import { genreList, fetchGenres } from './fetchGenres';
 import { URL, API_KEY, API_trendingMovies } from './variables';
+import { displayLoader, loader } from './displayLoader';
 
 const moviesListEl = document.querySelector('.movies__list');
 
 const getPopular = async () => {
   try {
+    displayLoader(loader);
     const result = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
     await fetchGenres();
     renderPopular(result.data.results);
   } catch (error) {
     console.error(error);
+  } finally {
+    displayLoader(loader);
   }
 };
 
@@ -33,7 +37,6 @@ const renderPopular = movies => {
           </figure>
         </li>
       `;
-
     moviesListEl.insertAdjacentHTML('beforeend', movieEl);
   });
 };
