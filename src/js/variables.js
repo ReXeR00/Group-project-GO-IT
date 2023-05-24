@@ -52,3 +52,4 @@ export async function fetchMovies(query, page) {
 }
 // Exportujemy funkcję fetchMovies, która wysyła zapytanie do API z podanym zapytaniem (query) i numerem strony (page).
 // Otrzymujemy odpowiedź (response), która może być następnie przetworzona i wykorzystana w dalszej części kodu.
+
