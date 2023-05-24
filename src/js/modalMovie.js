@@ -1,23 +1,32 @@
 import { fetchFilmDetailsById } from './fetchDetails';
 
-
 const refs = {
   // galleryBox: document.querySelector('[data-modal-open]'),
   galleryBox: document.querySelector('.movies__list'),
   filmModal: document.querySelector('[data-modal]'),
-  // closeBtn: document.querySelector('[data-modal-close]'),
-
   searchId: [],
   filmDetails: {},
 };
 
+
+const btnRefs={
+   closeBtn: document.querySelector('.modal-close'),
+}
+
 refs.galleryBox.addEventListener('click', galleryBoxClick);
+
+
+if (btnRefs.btnClose) {
+  btnRefs.btnClose.addEventListener('click', onBackdropModalClick)
+}
+// btnRefs.btnClose.addEventListener('click', onBackdropModalClick)
+
+
 
 async function galleryBoxClick(event) {
   if (event.target.classList.contains('.movies__list')) {
     return;
   }
-
   const galleryItem = event.target.closest('[data-id]');
   const filmId = galleryItem.dataset.id;
   console.log('ID filmu:', filmId);
@@ -26,30 +35,18 @@ async function galleryBoxClick(event) {
   if (refs.searchId.length > 0) {
     searchIdDetails = refs.searchId.find(film => film.id == filmId);
   }
-
-  // if (searchIdDetails) {
-  //   refs.filmDetails = searchIdDetails;
-  // } else {
-  //   try {
   const filmDetailsResponse = await fetchFilmDetailsById(filmId);
   const filmDetails = filmDetailsResponse.data;
   refs.filmDetails = filmDetails;
   refs.searchId.push(filmDetails);
-
-  //     fetchFilmDetailsById(filmId).then(data => {
-  //       console.log('Response:', data);
-  //       refs.filmDetails = data;
-  //       clearFilmModalMarkup();
-  //       renderFilmModal(refs.filmDetails);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
+  refs.filmModal.classList.remove('is-hidden'), 
   renderFilmModal(refs.filmDetails);
-  clearFilmModalMarkup();
+  
 }
+
+// clearFilmModalMarkup();
+
+
 
 function createFilmModalMarkup(data) {
   console.log('createFilmModalMarkup', data);
@@ -62,9 +59,9 @@ function createFilmModalMarkup(data) {
   const posterPath = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
   console.log(title);
   console.log(posterPath);
-  const movieEl = `
+  return `
     <div class="film-modal" >
-      <button class="button-close" type="button" button-modal-close>
+      <button class="button-close" type="button" value="click" button-modal-close>
        X
       </button>
       <img
@@ -126,16 +123,48 @@ function createFilmModalMarkup(data) {
     </div>
   `;
 
-  console.log(movieEl);
-}
 
-function clearFilmModalMarkup() {
-  refs.filmModal.innerHTML = '';
 }
 
 function renderFilmModal(data) {
   console.log('renderFilmModal data:', data);
   const fiimModalMarkup = createFilmModalMarkup(data);
-
   refs.filmModal.insertAdjacentHTML('beforeend', fiimModalMarkup);
 }
+
+
+function clearFilmModalMarkup() {
+  refs.filmModal.innerHTML = '';
+  
+}
+
+function onModalClose() {
+  refs.filmModal.classList.add('is-hidden'), 
+  window.removeEventListener('keydown', onEscapePress)
+}
+
+// function onBackdropModalClick(e) {
+//   if (e.currentTarget === e.target) {
+//     onCloseModal();
+//   }
+// }
+
+function onEscapePress (e) {
+  if(e.key === 'Escape') {
+    onModalClose()
+
+  }
+}
+
+
+// function onModalClose(event) {
+// if (event.target.classList.contains('button-modal-close')) {
+//   refs.filmModal.classList.add('is-hidden'), 
+//   window.removeEventListener('keydown', onEscapePress)
+// }
+ 
+// }
+
+
+
+
