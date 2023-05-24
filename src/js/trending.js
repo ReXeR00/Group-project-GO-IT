@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { genreList, fetchGenres } from './fetchGenres';
 import { URL, API_KEY, API_trendingMovies } from './variables';
+
 import { showPagination } from './pagination';
+
+import { displayLoader, loader } from './displayLoader';
+
 
 const moviesListEl = document.querySelector('.movies__list');
 
@@ -13,11 +17,17 @@ export const getPopular = async page => {
         page: page,
       },
     });
+
+    displayLoader(loader);
+    const result = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
+ main
     await fetchGenres();
 
     return result;
   } catch (error) {
     console.error(error);
+  } finally {
+    displayLoader(loader);
   }
 };
 
@@ -47,7 +57,6 @@ export const renderPopular = movies => {
           </figure>
         </li>
       `;
-
     moviesListEl.insertAdjacentHTML('beforeend', movieEl);
   });
 };
