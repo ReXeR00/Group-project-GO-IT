@@ -1,16 +1,29 @@
 import axios from 'axios';
 import { genreList, fetchGenres } from './fetchGenres';
 import { URL, API_KEY, API_trendingMovies } from './variables';
+
+import { showPagination } from './pagination';
+
 import { displayLoader, loader } from './displayLoader';
+
 
 const moviesListEl = document.querySelector('.movies__list');
 
-const getPopular = async () => {
+export const getPopular = async page => {
   try {
+    const result = await axios.get(URL + API_trendingMovies, {
+      params: {
+        api_key: API_KEY,
+        page: page,
+      },
+    });
+
     displayLoader(loader);
     const result = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
+ main
     await fetchGenres();
-    renderPopular(result.data.results);
+
+    return result;
   } catch (error) {
     console.error(error);
   } finally {
@@ -18,7 +31,14 @@ const getPopular = async () => {
   }
 };
 
-const renderPopular = movies => {
+getPopular().then(movie => {
+  renderPopular(movie.data.results);
+  showPagination(movie);
+});
+
+export const renderPopular = movies => {
+  moviesListEl.innerHTML = '';
+
   movies.forEach(movie => {
     const posterPath = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
     const releaseYear = new Date(movie.release_date).getFullYear();
