@@ -109,29 +109,15 @@ function renderFilmModal(data) {
   console.log('renderFilmModal data:', data);
   const fiimModalMarkup = createFilmModalMarkup(data);
   refs.filmModal.insertAdjacentHTML('beforeend', fiimModalMarkup);
-}
-
-// function clearFilmModalMarkup() {
-//   refs.filmModal.innerHTML = '';
-// }
-
-// ----> ZAMYKANIE
-const closeBtn = document.querySelector('.button-close');
-//closeBtn.addEventListener('click', closeModal);  <-- bład
-
-if (closeBtn) {
+  const closeBtn = document.querySelector('.button-close');
   closeBtn.addEventListener('click', closeModal);
+  window.addEventListener('keydown', closeModal);
+  window.addEventListener('click', closeModal);
 }
 
 function closeModal() {
   refs.filmModal.classList.add('is-hidden');
   refs.filmModal.innerHTML = '';
-}
-
-function onModalClose(event) {
-  if (event.target.classList.contains('button-close')) {
-    refs.filmModal.classList.add('is-hidden');
-  }
 }
 
 function onBackdropModalClick(event) {
@@ -143,13 +129,6 @@ function onBackdropModalClick(event) {
 function onEscapePress(event) {
   if (event.key === 'Escape') {
     closeModal();
+    window.removeEventListener('keydown', closeModal);
   }
 }
-
-// refs.closeBtn.addEventListener('click', function () {
-//   console.log(lol);
-// });
-
-// function onModalClose() {
-//   refs.filmModal.classList.add('is-hidden'), window.removeEventListener('keydown', onEscapePress);
-// }
