@@ -1,4 +1,6 @@
 import { fetchFilmDetailsById } from './fetchDetails';
+import { genreList, fetchGenres } from './fetchGenres';
+import {genreNames} from './trending'
 
 const refs = {
   // galleryBox: document.querySelector('[data-modal-open]'),
@@ -41,6 +43,13 @@ function createFilmModalMarkup(data) {
   const posterPath = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
   console.log(title);
   console.log(posterPath);
+  fetchGenres();
+  const genreNames = data.genre_ids
+  // .slice(0, 3)
+  // .map(genreId => genreList[genreId])
+  // .join(', ');
+  console.log(genreNames);
+
   return `
     <div class="film-modal" >
     <button class="button-close" type="button" button-modal-close>X</button>
@@ -76,7 +85,7 @@ function createFilmModalMarkup(data) {
             </li>
             <li class="film-info__item">
               <p class="film-info__lable">Genre</p>
-              <span class="film-info__text"></span>
+              <span class="film-info__text">${genreNames} </span>
             </li>
           </ul>
           <div class="film-description">
@@ -87,7 +96,7 @@ function createFilmModalMarkup(data) {
         <ul class="film-button">
           <li class="film-button__item">
             <button
-              class="film-button__primary"
+              class="film-button__primary library__btn library__btn--onclick"
               type="button"
               button-add-watch
             >
@@ -95,7 +104,7 @@ function createFilmModalMarkup(data) {
             </button>
           </li>
           <li class="film-button__item">
-            <button class="film-button__primary" type="button" button-add-queue>
+            <button class="film-button__primary library__btn" type="button" button-add-queue>
               Add to Queue
             </button>
           </li>
@@ -113,6 +122,7 @@ function renderFilmModal(data) {
   closeBtn.addEventListener('click', closeModal);
   window.addEventListener('keydown', closeModal);
   window.addEventListener('click', closeModal);
+ 
 }
 
 function closeModal() {
@@ -120,15 +130,3 @@ function closeModal() {
   refs.filmModal.innerHTML = '';
 }
 
-function onBackdropModalClick(event) {
-  if (event.currentTarget === event.target) {
-    closeModal();
-  }
-}
-
-function onEscapePress(event) {
-  if (event.key === 'Escape') {
-    closeModal();
-    window.removeEventListener('keydown', closeModal);
-  }
-}
