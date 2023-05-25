@@ -9,9 +9,9 @@ import { displayLoader, loader } from './displayLoader';
 
 const moviesListEl = document.querySelector('.movies__list');
 
-export const getPopular = async (page) => {
+export const getPopular = async page => {
   try {
-    const result1 = await axios.get(`${URL}${API_trendingMovies}`, {
+    const result = await axios.get(URL + API_trendingMovies, {
       params: {
         api_key: API_KEY,
         page: page,
@@ -19,23 +19,22 @@ export const getPopular = async (page) => {
     });
 
     displayLoader(loader);
-
-    const result2 = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
-
+    const result = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
+ main
     await fetchGenres();
 
-    return result2;
+    return result;
   } catch (error) {
     console.error(error);
   } finally {
     displayLoader(loader);
   }
 };
+
 getPopular().then(movie => {
   renderPopular(movie.data.results);
   showPagination(movie);
 });
-
 
 export const renderPopular = movies => {
   moviesListEl.innerHTML = '';
