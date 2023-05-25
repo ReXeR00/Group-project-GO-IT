@@ -5,10 +5,10 @@ const searchInput = document.getElementById('search_input');
 const moviesListEl = document.querySelector('.movies__list');
 const searchMessageEl = document.getElementById('search__message');
 
-const fetchMovies = async (query) => {
+const fetchMovies = async query => {
   try {
     const response = await axios.get(
-      `${URL}3/search/movie?api_key=${API_KEY}&query=${query}&language=en-US`
+      `${URL}3/search/movie?api_key=${API_KEY}&query=${query}&language=en-US`,
     );
     return response.data.results;
   } catch (error) {
@@ -25,15 +25,15 @@ const fetchPopularMovies = async () => {
   }
 };
 
-const renderMovies = (movies) => {
+const renderMovies = movies => {
   moviesListEl.innerHTML = '';
 
-  movies.forEach((movie) => {
+  movies.forEach(movie => {
     const posterPath = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
     const releaseYear = new Date(movie.release_date).getFullYear();
     const genreNames = movie.genre_ids
       .slice(0, 3)
-      .map((genreId) => genreList[genreId])
+      .map(genreId => genreList[genreId])
       .join(', ');
 
     const movieEl = `
@@ -62,7 +62,7 @@ const handleInputSearch = async () => {
       if (movies.length > 0) {
         searchMessageEl.style.display = 'none'; // Ukryj tekst błędu
       } else {
-        searchMessageEl.style.display = 'block'; // Wyświetl tekst błędu
+        searchMessageEl.style.display = 'flex'; // Wyświetl tekst błędu
       }
     } catch (error) {
       console.log('Wystąpił błąd podczas pobierania filmów:', error);

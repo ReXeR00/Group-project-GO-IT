@@ -6,7 +6,6 @@ import { showPagination } from './pagination';
 
 import { displayLoader, loader } from './displayLoader';
 
-
 const moviesListEl = document.querySelector('.movies__list');
 
 export const getPopular = async page => {
@@ -47,7 +46,7 @@ export const renderPopular = movies => {
       .join(', ');
 
     const movieEl = `
-        <li class="movies__element">
+        <li class="movies__element" data-id="${movie.id}">
           <figure>
             <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
             <figcaption>

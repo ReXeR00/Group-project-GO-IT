@@ -59,14 +59,9 @@ function createFilmModalMarkup(data) {
   const posterPath = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
   console.log(title);
   console.log(posterPath);
-  fetchGenres();
-  const genreNames = data.genres;
-  // .slice(0, 3)
-  // .map(genreId => genreList[genreId])
-  // .join(', ');
 
-  // console.log('genre', data);
-  // console.log('original', original_title);
+  const genreNames = data.genres;
+
   const gen = genreNames.map(element => {
     return ` ${element.name}`;
   });
@@ -74,6 +69,8 @@ function createFilmModalMarkup(data) {
   return `
     <div class="film-modal" >
     <button class="button-close" type="button" button-modal-close>X</button>
+
+
 
   const { title, vote_average, vote_count, popularity, original_title, overview, poster_path } =
     data;
@@ -116,6 +113,7 @@ function createFilmModalMarkup(data) {
             <li class="film-info__item">
               <p class="film-info__lable">Genre</p>
               <span class="film-info__text">${gen} </span>
+
               <p class="film-info__label">Genre</p>
               <span class="film-info__text">${data.genre}</span>
             </li>
@@ -160,6 +158,7 @@ function closeModal() {
   refs.filmModal.classList.add('is-hidden');
   refs.filmModal.innerHTML = '';
 
+
   return movieEl;
 }
 
@@ -170,6 +169,7 @@ function clearFilmModalMarkup() {
 function renderFilmModal(data) {
   const filmModalMarkup = createFilmModalMarkup(data);
   refs.filmModal.innerHTML = filmModalMarkup;
+
 }
 
 async function fetchFilmDetailsById(filmId) {
