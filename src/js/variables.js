@@ -3,7 +3,7 @@ import axios from 'axios';
 export const URL = `https://api.themoviedb.org/`;
 export const API_KEY = `9cd3003f00fa34df086a65205d0cd538`;
 
-export const API_trendingMovies = '3/trending/movie/week?api_key=';
+export const API_trendingMovies = '3/trending/movie/week';
 export const API_searchMovies = '3/search/search-movies';
 export const API_detailsMovies = '3/movies/get-movie-details';
 export const API_videosMovies = '3/movies/get-movie-videos';
@@ -52,4 +52,3 @@ export async function fetchMovies(query, page) {
 }
 // Exportujemy funkcję fetchMovies, która wysyła zapytanie do API z podanym zapytaniem (query) i numerem strony (page).
 // Otrzymujemy odpowiedź (response), która może być następnie przetworzona i wykorzystana w dalszej części kodu.
-
