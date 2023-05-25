@@ -77,15 +77,20 @@ function openModal(e) {
     if (e.code === 'Escape') {
       modal.close();
     }
+    //if (e.event.target.parentNode.parentNode.className != 'team-wrapper') modal.close();
   };
 
   const modal = basicLightbox.create(inserttohtml, {
     onShow: () => {},
     onClose: () => {
-      document.removeEventListener('keydown', closeModalHandler);
+      window.removeEventListener('keydown', closeModalHandler);
     },
   });
 
   modal.show();
   window.addEventListener('keydown', closeModalHandler);
+  /*   window.addEventListener('click', event => {
+    console.log('event.target: ', event.target.parentNode.parentNode.className);
+    //console.log('event.currentTarget: ', event.currentTarget);
+  }); */
 }
