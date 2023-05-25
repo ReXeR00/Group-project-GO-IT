@@ -1,6 +1,10 @@
+<<<<<<< Updated upstream
 import { fetchFilmDetailsById } from './fetchDetails';
 import { genreList, fetchGenres } from './fetchGenres';
 import { genreNames } from './trending';
+=======
+import axios from 'axios';
+>>>>>>> Stashed changes
 
 const refs = {
   // galleryBox: document.querySelector('[data-modal-open]'),
@@ -23,16 +27,35 @@ async function galleryBoxClick(event) {
   if (refs.searchId.length > 0) {
     searchIdDetails = refs.searchId.find(film => film.id == filmId);
   }
+<<<<<<< Updated upstream
   const filmDetailsResponse = await fetchFilmDetailsById(filmId);
   const filmDetails = filmDetailsResponse.data;
   refs.filmDetails = filmDetails;
   refs.searchId.push(filmDetails);
   refs.filmModal.classList.remove('is-hidden'), renderFilmModal(refs.filmDetails);
+=======
+
+  if (searchIdDetails) {
+    refs.filmDetails = searchIdDetails;
+    renderFilmModal(refs.filmDetails);
+  } else {
+    try {
+      const filmDetailsResponse = await fetchFilmDetailsById(filmId);
+      const filmDetails = filmDetailsResponse.data;
+      refs.filmDetails = filmDetails;
+      refs.searchId.push(filmDetails);
+      renderFilmModal(refs.filmDetails);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+>>>>>>> Stashed changes
 }
 
 // clearFilmModalMarkup();
 
 function createFilmModalMarkup(data) {
+<<<<<<< Updated upstream
   console.log('createFilmModalMarkup', data);
   const title = data.title;
   const vote_average = data.vote_average;
@@ -59,9 +82,20 @@ function createFilmModalMarkup(data) {
     <div class="film-modal" >
     <button class="button-close" type="button" button-modal-close>X</button>
 
+=======
+  const { title, vote_average, vote_count, popularity, original_title, overview, poster_path } =
+    data;
+  const posterPath = `https://image.tmdb.org/t/p/w500${poster_path}`;
+
+  const movieEl = `
+    <div class="film-modal">
+      <button class="button-close" type="button" button-modal-close>
+        X
+      </button>
+>>>>>>> Stashed changes
       <img
         class="film__image"
-        src="https://image.tmdb.org/t/p/w500/${posterPath}"
+        src="${posterPath}"
         alt="Film Image"
       />
       <article>
@@ -69,28 +103,33 @@ function createFilmModalMarkup(data) {
           <h2 class="film__title">${title}</h2>
           <ul class="film-info">
             <li class="film-info__item">
-              <p class="film-info__lable">Vote / Votes</p>
+              <p class="film-info__label">Vote / Votes</p>
               <div class="film-vote">
-                <span class="film-vote__lable film-vote__lable--orange">
+                <span class="film-vote__label film-vote__label--orange">
                   ${vote_average}
                 </span>
                 <span>/</span>
-                <span class="film-vote__lable">${vote_count}</span>
+                <span class="film-vote__label">${vote_count}</span>
               </div>
             </li>
             <li class="film-info__item">
-              <p class="film-info__lable">Popularity</p>
+              <p class="film-info__label">Popularity</p>
               <span class="film-info__text">${popularity}</span>
             </li>
             <li class="film-info__item">
-              <p class="film-info__lable">Original Title</p>
+              <p class="film-info__label">Original Title</p>
               <span class="film-info__text film-info__text--uppercase">
                 ${original_title}
               </span>
             </li>
             <li class="film-info__item">
+<<<<<<< Updated upstream
               <p class="film-info__lable">Genre</p>
               <span class="film-info__text">${gen} </span>
+=======
+              <p class="film-info__label">Genre</p>
+              <span class="film-info__text">${data.genre}</span>
+>>>>>>> Stashed changes
             </li>
           </ul>
           <div class="film-description">
@@ -117,6 +156,7 @@ function createFilmModalMarkup(data) {
       </article>
     </div>
   `;
+<<<<<<< Updated upstream
 }
 
 function renderFilmModal(data) {
@@ -132,4 +172,27 @@ function renderFilmModal(data) {
 function closeModal() {
   refs.filmModal.classList.add('is-hidden');
   refs.filmModal.innerHTML = '';
+=======
+
+  return movieEl;
 }
+
+function clearFilmModalMarkup() {
+  refs.filmModal.innerHTML = '';
+}
+
+function renderFilmModal(data) {
+  const filmModalMarkup = createFilmModalMarkup(data);
+  refs.filmModal.innerHTML = filmModalMarkup;
+>>>>>>> Stashed changes
+}
+
+async function fetchFilmDetailsById(filmId) {
+  const response = await axios.get(`API_URL/films/${filmId}`);
+  return response.data;
+}
+
+// Pozostała część kodu
+
+// export const genreList = { ... } // Zawartość obiektu genreList z variables.js
+// Inne importy i pozostała część kodu
