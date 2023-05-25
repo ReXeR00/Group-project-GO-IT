@@ -19,11 +19,11 @@ export const getPopular = async page => {
     });
 
     displayLoader(loader);
-    const result = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
+    const result2 = await axios.get(`${URL}${API_trendingMovies}${API_KEY}`);
  main
     await fetchGenres();
 
-    return result;
+    return result2;
   } catch (error) {
     console.error(error);
   } finally {
