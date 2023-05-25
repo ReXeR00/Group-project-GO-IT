@@ -23,7 +23,7 @@ const getMovieDataFromElements = () => {
 };
 
 const addToWatched = () => {
-  const watchedMovies = getFromStorage(localStorageKeys.WATCHED);
+  const watchedMovies = getFromStorage(localStorageKeys.WATCHED) || [];
 
   if (typeof watchedMovies !== 'undefined') {
     console.log(watchedMovies);
@@ -37,7 +37,7 @@ const addToWatched = () => {
 };
 
 const addToQueue = () => {
-  const queueMovies = getFromStorage(localStorageKeys.QUEUE);
+  const queueMovies = getFromStorage(localStorageKeys.QUEUE) || [];
 
   if (typeof queueMovies !== 'undefined') {
     console.log(queueMovies);
@@ -55,3 +55,36 @@ const addToQueueButton = document.querySelector('.library__btn--modalqueue');
 
 addToWatchedButton.addEventListener('click', addToWatched);
 addToQueueButton.addEventListener('click', addToQueue);
+
+const createFilmModalMarkup = data => {
+  const { title, voteAverage, voteCount, popularity, originalTitle, genreIds } = data;
+
+  const markup = `
+    <div class="film-modal">
+      <h2>${title}</h2>
+      <p>Vote Average: ${voteAverage}</p>
+      <p>Vote Count: ${voteCount}</p>
+      <p>Popularity: ${popularity}</p>
+      <p>Original Title: ${originalTitle}</p>
+      <p>Genre IDs: ${genreIds}</p>
+      <button class="button-close">Close</button>
+    </div>
+  `;
+
+  return markup;
+};
+
+const closeModal = () => {
+  const filmModal = document.querySelector('.film-modal');
+  filmModal.remove();
+};
+
+const showDynamicModal = data => {
+  const filmModalMarkup = createFilmModalMarkup(data);
+  const filmModalContainer = document.querySelector('.film-modal-container');
+  filmModalContainer.innerHTML = filmModalMarkup;
+  const closeBtn = document.querySelector('.button-close');
+  closeBtn.addEventListener('click', closeModal);
+  window.addEventListener('keydown', closeModal);
+  window.addEventListener('click', closeModal);
+};
