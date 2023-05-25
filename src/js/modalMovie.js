@@ -1,4 +1,6 @@
 import { fetchFilmDetailsById } from './fetchDetails';
+import { genreList, fetchGenres } from './fetchGenres';
+import { genreNames } from './trending';
 import axios from 'axios';
 
 const refs = {
@@ -27,6 +29,21 @@ async function galleryBoxClick(event) {
   refs.filmDetails = filmDetails;
   refs.searchId.push(filmDetails);
   refs.filmModal.classList.remove('is-hidden'), renderFilmModal(refs.filmDetails);
+
+  if (searchIdDetails) {
+    refs.filmDetails = searchIdDetails;
+    renderFilmModal(refs.filmDetails);
+  } else {
+    try {
+      const filmDetailsResponse = await fetchFilmDetailsById(filmId);
+      const filmDetails = filmDetailsResponse.data;
+      refs.filmDetails = filmDetails;
+      refs.searchId.push(filmDetails);
+      renderFilmModal(refs.filmDetails);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 // clearFilmModalMarkup();
@@ -53,6 +70,17 @@ function createFilmModalMarkup(data) {
     <div class="film-modal" >
     <button class="button-close" type="button" button-modal-close>X</button>
 
+
+
+  const { title, vote_average, vote_count, popularity, original_title, overview, poster_path } =
+    data;
+  const posterPath = `//image.tmdb.org/t/p/w500${poster_path}`;
+
+  const movieEl = `
+    <div class="film-modal">
+      <button class="button-close" type="button" button-modal-close>
+        X
+      </button>
       <img
         class="film__image"
         src="${posterPath}"
@@ -85,6 +113,9 @@ function createFilmModalMarkup(data) {
             <li class="film-info__item">
               <p class="film-info__lable">Genre</p>
               <span class="film-info__text">${gen} </span>
+
+              <p class="film-info__label">Genre</p>
+              <span class="film-info__text">${data.genre}</span>
             </li>
           </ul>
           <div class="film-description">
@@ -126,9 +157,26 @@ function renderFilmModal(data) {
 function closeModal() {
   refs.filmModal.classList.add('is-hidden');
   refs.filmModal.innerHTML = '';
+
+
+  return movieEl;
+}
+
+function clearFilmModalMarkup() {
+  refs.filmModal.innerHTML = '';
+}
+
+function renderFilmModal(data) {
+  const filmModalMarkup = createFilmModalMarkup(data);
+  refs.filmModal.innerHTML = filmModalMarkup;
+
 }
 
 async function fetchFilmDetailsById(filmId) {
   const response = await axios.get(`API_URL/films/${filmId}`);
   return response.data;
 }
+
+
+// export const genreList = { ... } // Zawartość obiektu genreList z variables.js
+// Inne importy i pozostała część kodu
