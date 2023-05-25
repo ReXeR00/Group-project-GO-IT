@@ -31,6 +31,10 @@ export const getPopular = async (page) => {
     displayLoader(loader);
   }
 };
+getPopular().then(movie => {
+  renderPopular(movie.data.results);
+  showPagination(movie);
+});
 
 
 export const renderPopular = movies => {
