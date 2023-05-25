@@ -45,6 +45,7 @@ export const renderPopular = movies => {
       .slice(0, 3)
       .map(genreId => genreList[genreId])
       .join(', ');
+
     const movieEl = `
         <li class="movies__element">
           <figure>
@@ -56,6 +57,7 @@ export const renderPopular = movies => {
           </figure>
         </li>
       `;
+
     moviesListEl.insertAdjacentHTML('beforeend', movieEl);
   });
 };

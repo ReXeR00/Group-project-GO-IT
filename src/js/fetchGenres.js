@@ -11,7 +11,7 @@ export const fetchGenres = async () => {
         api_key: API_KEY,
       },
     });
-    console.log(response);
+    // console.log(response);
     const genres = response.data.genres;
 
     genres.forEach(genre => {
@@ -22,4 +22,4 @@ export const fetchGenres = async () => {
   }
 };
 
-console.log('lista gatunkow', genreList);
+// console.log('lista gatunkow', genreList);
