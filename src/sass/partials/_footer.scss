@@ -89,7 +89,7 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   position: absolute;
   width: 12px;
   height: 12px;
-  background: $red-second;
+  background: #ff6b08;
   animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 .lds-heart div:after,
@@ -99,7 +99,7 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   display: block;
   width: 12px;
   height: 12px;
-  background: $red-second;
+  background: #ff6b08;
 }
 .lds-heart div:before {
   left: -8px;
@@ -131,6 +131,7 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .team-wrapper {
+  color: #f7f7f7;
   position: absolute;
   bottom: 0px;
   right: 50%;
@@ -142,8 +143,13 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   padding: 20px;
   width: 280px;
 
-  background-color: #d9afd9;
-  background-image: linear-gradient(0deg, #d9afd9 0%, #97d9e1 100%);
+  background-color: rgba(187, 13, 17, 1);
+  background-image: linear-gradient(
+    107deg,
+    rgba(187, 13, 17, 1) 0%,
+    rgba(0, 0, 0, 1) 48%,
+    rgba(187, 13, 17, 1) 100%
+  );
 
   border-radius: 15px;
 
@@ -192,6 +198,6 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .member-role {
-  color: #000000;
+  color: #f7f7f7;
   text-align: center;
 }
