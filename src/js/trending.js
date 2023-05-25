@@ -22,7 +22,7 @@ export const getPopular = async page => {
 
     await fetchGenres();
 
-    return response;
+    return result;
   } catch (error) {
     console.error(error);
   } finally {
