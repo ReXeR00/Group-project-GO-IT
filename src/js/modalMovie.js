@@ -1,6 +1,6 @@
 import { fetchFilmDetailsById } from './fetchDetails';
 import { genreList, fetchGenres } from './fetchGenres';
-import {genreNames} from './trending'
+import { genreNames } from './trending';
 
 const refs = {
   // galleryBox: document.querySelector('[data-modal-open]'),
@@ -44,11 +44,16 @@ function createFilmModalMarkup(data) {
   console.log(title);
   console.log(posterPath);
   fetchGenres();
-  const genreNames = data.genre_ids
+  const genreNames = data.genres;
   // .slice(0, 3)
   // .map(genreId => genreList[genreId])
   // .join(', ');
-  console.log(genreNames);
+
+  // console.log('genre', data);
+  // console.log('original', original_title);
+  const gen = genreNames.map(element => {
+    return ` ${element.name}`;
+  });
 
   return `
     <div class="film-modal" >
@@ -85,7 +90,7 @@ function createFilmModalMarkup(data) {
             </li>
             <li class="film-info__item">
               <p class="film-info__lable">Genre</p>
-              <span class="film-info__text">${genreNames} </span>
+              <span class="film-info__text">${gen} </span>
             </li>
           </ul>
           <div class="film-description">
@@ -122,11 +127,9 @@ function renderFilmModal(data) {
   closeBtn.addEventListener('click', closeModal);
   window.addEventListener('keydown', closeModal);
   window.addEventListener('click', closeModal);
- 
 }
 
 function closeModal() {
   refs.filmModal.classList.add('is-hidden');
   refs.filmModal.innerHTML = '';
 }
-
