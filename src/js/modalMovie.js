@@ -77,7 +77,7 @@ function createFilmModalMarkup(data) {
 
   const { title, vote_average, vote_count, popularity, original_title, overview, poster_path } =
     data;
-  const posterPath = `https://image.tmdb.org/t/p/w500${poster_path}`;
+  const posterPath = `//image.tmdb.org/t/p/w500${poster_path}`;
 
   const movieEl = `
     <div class="film-modal">
