@@ -1,15 +1,13 @@
 import * as basicLightbox from 'basiclightbox';
 
-import Yaroslav from '../images/team/Yaroslav.png';
-import Emil from '../images/team/Emil.png';
-import Julita from '../images/team/Julita.png';
+import Emil from '../images/team/Emil.jpg';
+import Julita from '../images/team/Julita.jpg';
 import Szymon from '../images/team/Szymon.png';
-import Karol from '../images/team/Karol.png';
-import Bartosz from '../images/team/Bartosz.png';
-import Dorota from '../images/team/Dorota.png';
-import Anna from '../images/team/Anna.png';
-import Weronika from '../images/team/Weronika.png';
-import Customer from '../images/team/Customer.png';
+import Karol from '../images/team/Karol.jpg';
+import Bartosz from '../images/team/Bartosz.jpg';
+import Dorota from '../images/team/Dorota.jpg';
+import Anna from '../images/team/Anna.jpg';
+import Weronika from '../images/team/Weronika.jpg';
 
 const inserttohtml = `<div class="team-wrapper">       
           <div class="member-card">
@@ -66,7 +64,8 @@ const inserttohtml = `<div class="team-wrapper">
               <p class="member-name">Weronika</p>
               <p class="member-name">Szymaniak</p>
               <p class="member-role">Developer</p>
-           </div>  
+           </div>
+           <a href="#" class="close"> 
 </div>`;
 
 const teamButton = document.querySelector('.js-team-modal');
@@ -76,19 +75,17 @@ console.log(teamButton);
 
 function openModal(e) {
   const closeModalHandler = e => {
-    if (e.keyCode === 13 || e.keyCode === 32) {
-      e.preventDefault();
-    }
     if (e.code === 'Escape') {
       modal.close();
-      button.disabled = false;
     }
   };
 
   const modal = basicLightbox.create(inserttohtml, {
-    onShow: () => {},
+    onShow: () => {
+      modal.element().querySelector('a').onclick = modal.close;
+    },
     onClose: () => {
-      document.removeEventListener('keydown', closeModalHandler);
+      window.removeEventListener('keydown', closeModalHandler);
     },
   });
 
