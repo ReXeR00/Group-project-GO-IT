@@ -143,13 +143,7 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   padding: 45px;
   width: 280px;
 
-  background-color: rgb(194, 57, 57);
-  background-image: linear-gradient(
-    107deg,
-    rgba(187, 13, 17, 1) 0%,
-    rgba(0, 0, 0, 1) 48%,
-    rgba(187, 13, 17, 1) 100%
-  );
+  background: #7b6f67; /* fallback for old browsers */
 
   border-radius: 15px;
 
@@ -202,8 +196,29 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
 }
 
-.close-modal {
+.close {
   position: absolute;
-  top: 8px;
   right: 8px;
+  top: 8px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.8;
+}
+.close:hover {
+  opacity: 1.5;
+}
+.close:before,
+.close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #f7f7f7;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
 }

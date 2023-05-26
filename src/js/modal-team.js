@@ -65,7 +65,7 @@ const inserttohtml = `<div class="team-wrapper">
               <p class="member-name">Szymaniak</p>
               <p class="member-role">Developer</p>
            </div>
-           <a class="close-modal">zamykaj</a>  
+           <a href="#" class="close"> 
 </div>`;
 
 const teamButton = document.querySelector('.js-team-modal');
