@@ -140,7 +140,7 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  padding: 20px;
+  padding: 45px;
   width: 280px;
 
   background-color: rgb(194, 57, 57);
@@ -200,4 +200,10 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 .member-role {
   color: #f7f7f7;
   text-align: center;
+}
+
+.close-modal {
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }

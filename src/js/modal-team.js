@@ -64,7 +64,8 @@ const inserttohtml = `<div class="team-wrapper">
               <p class="member-name">Weronika</p>
               <p class="member-name">Szymaniak</p>
               <p class="member-role">Developer</p>
-           </div>  
+           </div>
+           <a class="close-modal">zamykaj</a>  
 </div>`;
 
 const teamButton = document.querySelector('.js-team-modal');
@@ -77,11 +78,12 @@ function openModal(e) {
     if (e.code === 'Escape') {
       modal.close();
     }
-    //if (e.event.target.parentNode.parentNode.className != 'team-wrapper') modal.close();
   };
 
   const modal = basicLightbox.create(inserttohtml, {
-    onShow: () => {},
+    onShow: () => {
+      modal.element().querySelector('a').onclick = modal.close;
+    },
     onClose: () => {
       window.removeEventListener('keydown', closeModalHandler);
     },
@@ -89,8 +91,4 @@ function openModal(e) {
 
   modal.show();
   window.addEventListener('keydown', closeModalHandler);
-  /*   window.addEventListener('click', event => {
-    console.log('event.target: ', event.target.parentNode.parentNode.className);
-    //console.log('event.currentTarget: ', event.currentTarget);
-  }); */
 }
