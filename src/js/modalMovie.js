@@ -2,6 +2,7 @@ import { fetchFilmDetailsById } from './fetchDetails';
 import { genreList, fetchGenres } from './fetchGenres';
 import { genreNames } from './trending';
 import axios from 'axios';
+import { loader, displayLoader } from './displayLoader';
 
 const refs = {
   // galleryBox: document.querySelector('[data-modal-open]'),
@@ -24,6 +25,7 @@ async function galleryBoxClick(event) {
   if (refs.searchId.length > 0) {
     searchIdDetails = refs.searchId.find(film => film.id == filmId);
   }
+  displayLoader(loader);
   const filmDetailsResponse = await fetchFilmDetailsById(filmId);
   const filmDetails = filmDetailsResponse.data;
   refs.filmDetails = filmDetails;
@@ -148,6 +150,7 @@ function renderFilmModal(data) {
   console.log('renderFilmModal data:', data);
   const fiimModalMarkup = createFilmModalMarkup(data);
   refs.filmModal.insertAdjacentHTML('beforeend', fiimModalMarkup);
+  displayLoader(loader);
   const closeBtn = document.querySelector('.button-close');
   closeBtn.addEventListener('click', closeModal);
   window.addEventListener('keydown', closeModal);
