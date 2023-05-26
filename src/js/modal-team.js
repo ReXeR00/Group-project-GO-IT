@@ -3,7 +3,7 @@ import * as basicLightbox from 'basiclightbox';
 import Emil from '../images/team/Emil.jpg';
 import Julita from '../images/team/Julita.jpg';
 import Szymon from '../images/team/Szymon.png';
-import Karol from '../images/team/Karol.png';
+import Karol from '../images/team/Karol.jpg';
 import Bartosz from '../images/team/Bartosz.jpg';
 import Dorota from '../images/team/Dorota.jpg';
 import Anna from '../images/team/Anna.jpg';
