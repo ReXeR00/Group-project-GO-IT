@@ -20,8 +20,6 @@
 
 .header__wrapper {
   background-size: cover;
-  display: flex;
-  flex-direction: column;
 }
 
 .menu__wrapper {
@@ -96,9 +94,11 @@
 
 .search__message {
   color: #ff001b;
-  // display: none;
+  display: none;
+  justify-content: center;
   line-height: 16.41px;
   font-size: 14px;
+  text-align: center;
 }
 
 // PHONE //
