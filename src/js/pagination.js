@@ -1,4 +1,5 @@
 import { addPageNumber, dots, prevPage, nextPage } from './createPaginationElements';
+import { fetchMovies, query, searchInput } from './input-search';
 import { getPopular, renderPopular } from './trending';
 
 export const paginationEl = document.querySelector('.pagination');
@@ -9,6 +10,7 @@ export const showPagination = page => {
 
   const currentPage = page.data.page;
   let totalPages = page.data.total_pages;
+  console.log('Pagination total pages', totalPages);
 
   if (totalPages > 20) totalPages = 20;
 
@@ -25,7 +27,7 @@ export const showPagination = page => {
         }
       }
 
-      if (totalPages != 1) nextPage(currentPage);
+      if (totalPages != 1 && totalPages != 0) nextPage(currentPage);
     } else {
       prevPage();
 
@@ -50,7 +52,9 @@ export const showPagination = page => {
       nextPage(currentPage);
     }
 
-    document.querySelector(`li[data-value="${currentPage}"]`).classList.add('active');
+    if (totalPages > 1) {
+      document.querySelector(`li[data-value="${currentPage}"]`).classList.add('active');
+    }
 
     changePages(currentPage, totalPages);
   };
@@ -65,12 +69,19 @@ const changePages = (currentPage, totalPages) => {
       setTimeout(() => {
         scrollToTop();
 
-        getPopular(currentPage - 1)
-          .then(movie => {
+        if (searchInput.value === '') {
+          getPopular(currentPage - 1)
+            .then(movie => {
+              renderPopular(movie.data.results);
+              showPagination(movie);
+            })
+            .catch(error => console.log(error));
+        } else {
+          fetchMovies(query, currentPage - 1).then(movie => {
             renderPopular(movie.data.results);
             showPagination(movie);
-          })
-          .catch(error => console.log(error));
+          });
+        }
       }, 250);
     });
 
@@ -79,12 +90,19 @@ const changePages = (currentPage, totalPages) => {
       setTimeout(() => {
         scrollToTop();
 
-        getPopular(currentPage + 1)
-          .then(movie => {
+        if (searchInput.value === '') {
+          getPopular(currentPage + 1)
+            .then(movie => {
+              renderPopular(movie.data.results);
+              showPagination(movie);
+            })
+            .catch(error => console.log(error));
+        } else {
+          fetchMovies(query, currentPage + 1).then(movie => {
             renderPopular(movie.data.results);
             showPagination(movie);
-          })
-          .catch(error => console.log(error));
+          });
+        }
       }, 250);
     });
 
@@ -94,12 +112,19 @@ const changePages = (currentPage, totalPages) => {
       setTimeout(() => {
         scrollToTop();
 
-        getPopular(selectedPage)
-          .then(movie => {
+        if (searchInput.value === '') {
+          getPopular(selectedPage)
+            .then(movie => {
+              renderPopular(movie.data.results);
+              showPagination(movie);
+            })
+            .catch(error => console.log(error));
+        } else {
+          fetchMovies(query, selectedPage).then(movie => {
             renderPopular(movie.data.results);
             showPagination(movie);
-          })
-          .catch(error => console.log(error));
+          });
+        }
       }, 250);
     });
   });

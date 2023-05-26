@@ -61,4 +61,4 @@ export const renderPopular = movies => {
   });
 };
 
-getPopular();
+// getPopular();
