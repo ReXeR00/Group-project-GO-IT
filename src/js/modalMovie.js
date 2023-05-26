@@ -131,7 +131,7 @@ function closeModal() {
   refs.filmModal.innerHTML = '';
 }
 
-async function fetchFilmDetailsById(filmId) {
+async function fetchFilmDetailsByIdCurrent(filmId) {
   const response = await axios.get(`API_URL/films/${filmId}`);
   return response.data;
 }
