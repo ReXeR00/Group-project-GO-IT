@@ -135,3 +135,27 @@ async function fetchFilmDetailsByIdCurrent(filmId) {
   const response = await axios.get(`API_URL/films/${filmId}`);
   return response.data;
 }
+
+async function addToWatchedHandler() {
+  const film = {
+    id: refs.filmDetails.id,
+    title: refs.filmDetails.title,
+    posterPath: refs.filmDetails.poster_path,
+  };
+
+  addToWatched(film);
+
+  console.log('Film added to Watched:', film);
+}
+
+async function addToQueueHandler() {
+  const film = {
+    id: refs.filmDetails.id,
+    title: refs.filmDetails.title,
+    posterPath: refs.filmDetails.poster_path,
+  };
+
+  addToQueue(film);
+
+  console.log('Film added to Queue:', film);
+}
