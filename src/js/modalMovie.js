@@ -1,6 +1,7 @@
 import { fetchFilmDetailsById } from './fetchDetails';
 import axios from 'axios';
 import { loader, displayLoader } from './displayLoader';
+import { addToWatched, addToQueue } from './local-storage';
 
 const refs = {
   // galleryBox: document.querySelector('[data-modal-open]'),
