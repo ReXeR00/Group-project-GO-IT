@@ -75,6 +75,7 @@ export const renderfromLocalStorage = () => {
   handleButtonClick(watchedEl, localStorageKeys.WATCHED);
 
   function renderMovies(data) {
+    console.log('data', data)
     moviesLibraryEl.innerHTML = '';
 
     if (data === null) return;
@@ -90,6 +91,7 @@ export const renderfromLocalStorage = () => {
           console.log(error);
         });
     });
+    
   }
 
   function createMovieElement(data) {
