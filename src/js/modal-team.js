@@ -71,7 +71,7 @@ const inserttohtml = `<div class="team-wrapper">
 const teamButton = document.querySelector('.js-team-modal');
 
 teamButton.addEventListener('click', openModal);
-console.log(teamButton);
+//console.log(teamButton);
 
 function openModal(e) {
   const closeModalHandler = e => {
