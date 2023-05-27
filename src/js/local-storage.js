@@ -1,3 +1,4 @@
+import { fetchFilmDetailsById } from './fetchDetails';
 const moviesLibraryEl = document.querySelector('.movies__library');
 
 export const localStorageKeys = {
@@ -26,12 +27,15 @@ export const setToLocalStorage = (key, value) => {
 
 export const addToWatched = film => {
   try {
-    let watchedFilms = getFromStorage(localStorageKeys.WATCHED) || [];
+    let watchedFilmIds = getFromStorage(localStorageKeys.WATCHED) || [];
 
-    watchedFilms.push(film);
-
-    setToLocalStorage(localStorageKeys.WATCHED, watchedFilms);
-    console.log('Film added to Watched:', film);
+    if (!watchedFilmIds.includes(film.id)) {
+      watchedFilmIds.push(film.id);
+      setToLocalStorage(localStorageKeys.WATCHED, watchedFilmIds);
+      console.log('Film added to Watched:', film);
+    } else {
+      console.log('Film already exists in Watched:', film);
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -39,69 +43,74 @@ export const addToWatched = film => {
 
 export const addToQueue = film => {
   try {
-    let filmQueue = getFromStorage(localStorageKeys.QUEUE) || [];
-    filmQueue.push(film);
-    setToLocalStorage(localStorageKeys.QUEUE, filmQueue);
-    console.log('Film added to Queue:', film);
+    let filmQueueIds = getFromStorage(localStorageKeys.QUEUE) || [];
+
+    if (!filmQueueIds.includes(film.id)) {
+      filmQueueIds.push(film.id);
+      setToLocalStorage(localStorageKeys.QUEUE, filmQueueIds);
+      console.log('Film added to Queue:', film);
+    } else {
+      console.log('Film already exists in Queue:', film);
+    }
   } catch (error) {
     console.log(error.message);
   }
 };
 
 export const renderfromLocalStorage = () => {
-  let parsedData = '';
-
   const watchedEl = document.getElementById('watched');
   const queueEl = document.getElementById('queue');
+  let parsedData = null;
 
-  const abc = () => {
-    if (watchedEl.classList.contains('library__btn--onclick')) {
-      parsedData = JSON.parse(localStorage.getItem(localStorageKeys.WATCHED));
-    }
-
-    if (queueEl.classList.contains('library__btn--onclick')) {
-      parsedData = JSON.parse(localStorage.getItem(localStorageKeys.QUEUE));
-    }
-
-    watchedEl.addEventListener('click', () => {
-      watchedEl.classList.add('library__btn--onclick');
-      queueEl.classList.remove('library__btn--onclick');
-      renderfromLocalStorage();
-    });
-
-    queueEl.addEventListener('click', () => {
-      watchedEl.classList.remove('library__btn--onclick');
-      queueEl.classList.add('library__btn--onclick');
-      renderfromLocalStorage();
-    });
+  const handleButtonClick = (buttonEl, storageKey) => {
+    watchedEl.classList.toggle('library__btn--onclick', buttonEl === watchedEl);
+    queueEl.classList.toggle('library__btn--onclick', buttonEl === queueEl);
+    parsedData = getFromStorage(storageKey) || [];
+    renderMovies(parsedData);
   };
 
-  moviesLibraryEl.innerHTML = '';
-  abc();
+  watchedEl.addEventListener('click', () => handleButtonClick(watchedEl, localStorageKeys.WATCHED));
+  queueEl.addEventListener('click', () => handleButtonClick(queueEl, localStorageKeys.QUEUE));
 
-  if (parsedData === null) return;
+  handleButtonClick(watchedEl, localStorageKeys.WATCHED);
 
-  parsedData.forEach(movie => {
-    console.log(movie);
-    const posterPath = `https://image.tmdb.org/t/p/w500${movie.posterPath}`;
-    const releaseYear = new Date(movie.releaseYear).getFullYear();
-    const genreNames = movie.genreNames
+  function renderMovies(data) {
+    moviesLibraryEl.innerHTML = '';
+
+    if (data === null) return;
+
+    data.forEach(movieId => {
+      fetchFilmDetailsById(movieId)
+        .then(filmDetailsResponse => {
+          const filmDetails = filmDetailsResponse.data;
+          const movieEl = createMovieElement(filmDetails);
+          moviesLibraryEl.insertAdjacentHTML('beforeend', movieEl);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    });
+  }
+
+  function createMovieElement(data) {
+    const { id, title, poster_path, release_date, genres } = data;
+    const posterPath = `https://image.tmdb.org/t/p/w500${poster_path}`;
+    const releaseYear = new Date(release_date).getFullYear();
+    const genreNames = genres
       .slice(0, 3)
-      .map(genreId => genreId.name)
+      .map(genre => genre.name)
       .join(', ');
 
-    const movieEl = `
-        <li class="movies__element" data-id="${movie.id}">
-          <figure>
-            <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
-            <figcaption>
-              <p class="movies__title">${movie.title}</p>
-              <p class="movies__type">${genreNames} | <span class="movies__year">${releaseYear}</span></p>
-            </figcaption>
-          </figure>
-        </li>
-      `;
-
-    moviesLibraryEl.insertAdjacentHTML('beforeend', movieEl);
-  });
+    return `
+      <li class="movies__element" data-id="${id}">
+        <figure>
+          <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
+          <figcaption>
+            <p class="movies__title">${title}</p>
+            <p class="movies__type">${genreNames} | <span class="movies__year">${releaseYear}</span></p>
+          </figcaption>
+        </figure>
+      </li>
+    `;
+  }
 };
