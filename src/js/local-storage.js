@@ -1,6 +1,6 @@
-// import { addToWatchedHandler } from './modalMovie';
+const moviesLibraryEl = document.querySelector('.movies__library');
 
-const localStorageKeys = {
+export const localStorageKeys = {
   WATCHED: 'watchedMovies',
   QUEUE: 'movieQueue',
 };
@@ -48,31 +48,60 @@ export const addToQueue = film => {
   }
 };
 
-const parsedData = JSON.parse(localStorage.getItem(localStorageKeys.WATCHED));
-console.log('parsed data', parsedData);
+export const renderfromLocalStorage = () => {
+  let parsedData = '';
 
-const moviesLibraryEl = document.querySelector('.movies__library');
+  const watchedEl = document.getElementById('watched');
+  const queueEl = document.getElementById('queue');
 
-parsedData.forEach(movie => {
-  console.log(movie);
-  const posterPath = `https://image.tmdb.org/t/p/w500${movie.posterPath}`;
-  // const releaseYear = new Date(movie.release_date).getFullYear();
-  // const genreNames = movie.genre_ids
-  //   .slice(0, 3)
-  //   .map(genreId => genreList[genreId])
-  //   .join(', ');
+  const abc = () => {
+    if (watchedEl.classList.contains('library__btn--onclick')) {
+      parsedData = JSON.parse(localStorage.getItem(localStorageKeys.WATCHED));
+    }
 
-  const movieEl = `
+    if (queueEl.classList.contains('library__btn--onclick')) {
+      parsedData = JSON.parse(localStorage.getItem(localStorageKeys.QUEUE));
+    }
+
+    watchedEl.addEventListener('click', () => {
+      watchedEl.classList.add('library__btn--onclick');
+      queueEl.classList.remove('library__btn--onclick');
+      renderfromLocalStorage();
+    });
+
+    queueEl.addEventListener('click', () => {
+      watchedEl.classList.remove('library__btn--onclick');
+      queueEl.classList.add('library__btn--onclick');
+      renderfromLocalStorage();
+    });
+  };
+
+  moviesLibraryEl.innerHTML = '';
+  abc();
+
+  if (parsedData === null) return;
+
+  parsedData.forEach(movie => {
+    console.log(movie);
+    const posterPath = `https://image.tmdb.org/t/p/w500${movie.posterPath}`;
+    const releaseYear = new Date(movie.releaseYear).getFullYear();
+    const genreNames = movie.genreNames
+      .slice(0, 3)
+      .map(genreId => genreId.name)
+      .join(', ');
+
+    const movieEl = `
         <li class="movies__element" data-id="${movie.id}">
           <figure>
             <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
             <figcaption>
               <p class="movies__title">${movie.title}</p>
-              <p class="movies__type">tutaj będzie genre | <span class="movies__year">rok jakiśtam</span></p>
+              <p class="movies__type">${genreNames} | <span class="movies__year">${releaseYear}</span></p>
             </figcaption>
           </figure>
         </li>
       `;
 
-  moviesLibraryEl.insertAdjacentHTML('beforeend', movieEl);
-});
+    moviesLibraryEl.insertAdjacentHTML('beforeend', movieEl);
+  });
+};

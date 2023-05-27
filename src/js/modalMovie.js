@@ -150,6 +150,8 @@ export async function addToWatchedHandler() {
     id: refs.filmDetails.id,
     title: refs.filmDetails.title,
     posterPath: refs.filmDetails.poster_path,
+    releaseYear: refs.filmDetails.release_date,
+    genreNames: refs.filmDetails.genres,
   };
 
   addToWatched(film);
@@ -163,6 +165,8 @@ async function addToQueueHandler() {
     id: refs.filmDetails.id,
     title: refs.filmDetails.title,
     posterPath: refs.filmDetails.poster_path,
+    releaseYear: refs.filmDetails.release_date,
+    genreNames: refs.filmDetails.genres,
   };
 
   addToQueue(film);
