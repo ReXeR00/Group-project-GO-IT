@@ -65,7 +65,7 @@ const inserttohtml = `<div class="team-wrapper">
               <p class="member-name">Szymaniak</p>
               <p class="member-role">Developer</p>
            </div>
-           <a href="#" class="close"> 
+           <span href="#" class="close"></span> 
 </div>`;
 
 const teamButton = document.querySelector('.js-team-modal');
@@ -82,7 +82,7 @@ function openModal(e) {
 
   const modal = basicLightbox.create(inserttohtml, {
     onShow: () => {
-      modal.element().querySelector('a').onclick = modal.close;
+      modal.element().querySelector('span').onclick = modal.close;
     },
     onClose: () => {
       window.removeEventListener('keydown', closeModalHandler);
