@@ -2,8 +2,10 @@
   <div class="header__wrapper">
     <div class="menu__wrapper">
       <div class="header__logo">
-        <img class="header__logo" src="/src/images/page_logo.png" alt="Page logo" />
-        <span class="header__name" href="index.html">Filmoteka</span>
+        <a href="index.html">
+          <img class="header__image" src="/src/images/page_logo.png" alt="Page logo" />
+          <span class="header__name">Filmoteka</span>
+        </a>
       </div>
       <ul class="header__nav">
         <li class="header__nav-item">
@@ -16,12 +18,19 @@
     </div>
 
     <div class="search__container">
-      <input id="search_input" type="text" placeholder="Movie search" aria-label="Movie search" required />
+      <input
+        id="search_input"
+        type="text"
+        placeholder="Movie search"
+        aria-label="Movie search"
+        required
+      />
       <button class="search__button" type="submit">
         <img class="search__icon" src="/src/icons/search_glass.svg" alt="Search icon" />
       </button>
     </div>
-    <span class="search__message is-hidden" id="search__message">Search result not successful. Enter the correct movie
-      name and try again.</span>
+    <span class="search__message is-hidden" id="search__message"
+      >Search result not successful. Enter the correct movie name and try again.</span
+    >
   </div>
 </header>
