@@ -60,5 +60,3 @@ export const renderPopular = movies => {
     moviesListEl.insertAdjacentHTML('beforeend', movieEl);
   });
 };
-
-// getPopular();

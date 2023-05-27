@@ -1,3 +1,5 @@
+// import { addToWatchedHandler } from './modalMovie';
+
 const localStorageKeys = {
   WATCHED: 'watchedMovies',
   QUEUE: 'movieQueue',
@@ -25,7 +27,9 @@ export const setToLocalStorage = (key, value) => {
 export const addToWatched = film => {
   try {
     let watchedFilms = getFromStorage(localStorageKeys.WATCHED) || [];
+
     watchedFilms.push(film);
+
     setToLocalStorage(localStorageKeys.WATCHED, watchedFilms);
     console.log('Film added to Watched:', film);
   } catch (error) {
@@ -43,3 +47,32 @@ export const addToQueue = film => {
     console.log(error.message);
   }
 };
+
+const parsedData = JSON.parse(localStorage.getItem(localStorageKeys.WATCHED));
+console.log('parsed data', parsedData);
+
+const moviesLibraryEl = document.querySelector('.movies__library');
+
+parsedData.forEach(movie => {
+  console.log(movie);
+  const posterPath = `https://image.tmdb.org/t/p/w500${movie.posterPath}`;
+  // const releaseYear = new Date(movie.release_date).getFullYear();
+  // const genreNames = movie.genre_ids
+  //   .slice(0, 3)
+  //   .map(genreId => genreList[genreId])
+  //   .join(', ');
+
+  const movieEl = `
+        <li class="movies__element" data-id="${movie.id}">
+          <figure>
+            <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
+            <figcaption>
+              <p class="movies__title">${movie.title}</p>
+              <p class="movies__type">tutaj będzie genre | <span class="movies__year">rok jakiśtam</span></p>
+            </figcaption>
+          </figure>
+        </li>
+      `;
+
+  moviesLibraryEl.insertAdjacentHTML('beforeend', movieEl);
+});

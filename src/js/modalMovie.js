@@ -10,6 +10,7 @@ const refs = {
   searchId: [],
   filmDetails: {},
 };
+
 refs.galleryBox.addEventListener('click', galleryBoxClick);
 
 async function galleryBoxClick(event) {
@@ -24,9 +25,12 @@ async function galleryBoxClick(event) {
   if (refs.searchId.length > 0) {
     searchIdDetails = refs.searchId.find(film => film.id == filmId);
   }
+
   displayLoader(loader);
+
   const filmDetailsResponse = await fetchFilmDetailsById(filmId);
   const filmDetails = filmDetailsResponse.data;
+
   refs.filmDetails = filmDetails;
   refs.searchId.push(filmDetails);
   refs.filmModal.classList.remove('is-hidden'), renderFilmModal(refs.filmDetails);
@@ -141,7 +145,7 @@ async function fetchFilmDetailsByIdCurrent(filmId) {
   return response.data;
 }
 
-async function addToWatchedHandler() {
+export async function addToWatchedHandler() {
   const film = {
     id: refs.filmDetails.id,
     title: refs.filmDetails.title,
@@ -151,6 +155,7 @@ async function addToWatchedHandler() {
   addToWatched(film);
 
   console.log('Film added to Watched:', film);
+  // return film;
 }
 
 async function addToQueueHandler() {
