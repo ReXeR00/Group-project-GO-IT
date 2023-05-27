@@ -9,6 +9,7 @@ import { displayLoader, loader } from './displayLoader';
 const moviesListEl = document.querySelector('.movies__list');
 
 export const getPopular = async page => {
+  displayLoader(loader);
   try {
     const result = await axios.get(URL + API_trendingMovies, {
       params: {
@@ -16,8 +17,6 @@ export const getPopular = async page => {
         page: page,
       },
     });
-
-    displayLoader(loader);
 
     await fetchGenres();
 
@@ -37,26 +36,30 @@ getPopular().then(movie => {
 export const renderPopular = movies => {
   moviesListEl.innerHTML = '';
 
-  movies.forEach(movie => {
-    const posterPath = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-    const releaseYear = new Date(movie.release_date).getFullYear();
-    const genreNames = movie.genre_ids
-      .slice(0, 3)
-      .map(genreId => genreList[genreId])
-      .join(', ');
+  const movieElements = movies
+    .map(movie => {
+      const { poster_path, release_date, genre_ids, title, id } = movie;
+      const posterPath = `https://image.tmdb.org/t/p/w500${poster_path}`;
+      const releaseYear = new Date(release_date).getFullYear();
+      const genreNames = genre_ids
+        .slice(0, 3)
+        .map(genreId => genreList[genreId])
+        .join(', ');
 
-    const movieEl = `
-        <li class="movies__element" data-id="${movie.id}">
-          <figure>
-            <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
-            <figcaption>
-              <p class="movies__title">${movie.title}</p>
-              <p class="movies__type">${genreNames} | <span class="movies__year">${releaseYear}</span></p>
-            </figcaption>
-          </figure>
-        </li>
-      `;
+      return `
+      <li class="movies__element" data-id="${id}">
+        <figure>
+          <img src="${posterPath}" alt="Movie Poster" class="movies__poster">
+          <figcaption>
+            <p class="movies__title">${title}</p>
+            <p class="movies__type">${genreNames} | <span class="movies__year">${releaseYear}</span></p>
+          </figcaption>
+        </figure>
+      </li>
+    `;
+    })
+    .join('');
 
-    moviesListEl.insertAdjacentHTML('beforeend', movieEl);
-  });
+  moviesListEl.insertAdjacentHTML('beforeend', movieElements);
 };
+
