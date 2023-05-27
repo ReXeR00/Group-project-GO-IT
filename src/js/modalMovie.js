@@ -1,6 +1,7 @@
 import { fetchFilmDetailsById } from './fetchDetails';
 import axios from 'axios';
 import { loader, displayLoader } from './displayLoader';
+import { addToWatched, addToQueue } from './local-storage';
 
 const refs = {
   // galleryBox: document.querySelector('[data-modal-open]'),
@@ -124,6 +125,10 @@ function renderFilmModal(data) {
   closeBtn.addEventListener('click', closeModal);
   window.addEventListener('keydown', closeModal);
   window.addEventListener('click', closeModal);
+  const addToWatchedBtn = document.querySelector('[button-add-watch]');
+  addToWatchedBtn.addEventListener('click', addToWatchedHandler);
+  const addToQueueBtn = document.querySelector('[button-add-queue]');
+  addToQueueBtn.addEventListener('click', addToQueueHandler);
 }
 
 function closeModal() {
@@ -134,4 +139,28 @@ function closeModal() {
 async function fetchFilmDetailsByIdCurrent(filmId) {
   const response = await axios.get(`API_URL/films/${filmId}`);
   return response.data;
+}
+
+async function addToWatchedHandler() {
+  const film = {
+    id: refs.filmDetails.id,
+    title: refs.filmDetails.title,
+    posterPath: refs.filmDetails.poster_path,
+  };
+
+  addToWatched(film);
+
+  console.log('Film added to Watched:', film);
+}
+
+async function addToQueueHandler() {
+  const film = {
+    id: refs.filmDetails.id,
+    title: refs.filmDetails.title,
+    posterPath: refs.filmDetails.poster_path,
+  };
+
+  addToQueue(film);
+
+  console.log('Film added to Queue:', film);
 }
