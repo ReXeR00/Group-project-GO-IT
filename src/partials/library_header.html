@@ -2,8 +2,10 @@
   <div class="library__wrapper">
     <div class="menu__wrapper">
       <div class="header__logo">
-        <img class="header__logo" src="/src/images/page_logo.png" alt="Page logo" />
-        <span class="header__name">Filmoteka</span>
+        <a href="index.html">
+          <img class="header__image" src="/src/images/page_logo.png" alt="Page logo" />
+          <span class="header__name">Filmoteka</span>
+        </a>
       </div>
       <ul class="header__nav">
         <li class="header__nav-item">
@@ -16,8 +18,8 @@
     </div>
     <div class="library__btns-wrapper">
       <div class="library__btns">
-        <button class="library__btn">Watched</button>
-        <button class="library__btn library__btn--onclick">queue</button>
+        <button class="library__btn library__btn--onclick" id="watched">Watched</button>
+        <button class="library__btn" id="queue">queue</button>
       </div>
     </div>
   </div>

@@ -89,7 +89,7 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   position: absolute;
   width: 12px;
   height: 12px;
-  background: $red-second;
+  background: #ff6b08;
   animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 .lds-heart div:after,
@@ -99,7 +99,7 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   display: block;
   width: 12px;
   height: 12px;
-  background: $red-second;
+  background: #ff6b08;
 }
 .lds-heart div:before {
   left: -8px;
@@ -131,6 +131,7 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .team-wrapper {
+  color: #f7f7f7;
   position: absolute;
   bottom: 0px;
   right: 50%;
@@ -139,11 +140,10 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  padding: 20px;
+  padding: 30px;
   width: 280px;
 
-  background-color: #d9afd9;
-  background-image: linear-gradient(0deg, #d9afd9 0%, #97d9e1 100%);
+  background: #7b6f67; /* fallback for old browsers */
 
   border-radius: 15px;
 
@@ -192,6 +192,33 @@ $timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .member-role {
-  color: #000000;
+  color: #f7f7f7;
   text-align: center;
+}
+
+.close {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.8;
+}
+.close:hover {
+  opacity: 1.5;
+}
+.close:before,
+.close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #f7f7f7;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
 }
