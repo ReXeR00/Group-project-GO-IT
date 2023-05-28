@@ -16,23 +16,6 @@ export const genreList = {
   35: 'Comedy',
 };
 
-// w tych 3 pozycjach info wyświetlane są w taki sam sposób
-// https://api.themoviedb.org/3/trending/get-trending
-// https://api.themoviedb.org/3/search/search-movies
-// https://api.themoviedb.org/3/movies/get-movie-details
-// https://api.themoviedb.org/3/movies/get-movie-videos
-
-// ${title} - tytuł filmu
-// ${overview} - opis/ about
-// ${poster_path} - trzeba wcześniej dodać jeszcze ścieżkę https://image.tmdb.org/t/p/original (zgodnie z info https://developer.themoviedb.org/docs/image-basics)
-// ${vote_average} - ocena / ${vote_count} - liczbę głosów
-// ${popularity} - popularność
-// ${original_title} - oryginalny tytuł filmu
-// ${genre_ids} - gatunek, ale podaje go jako nr. Znaczenie numeru jest tu:
-
-// https://api.themoviedb.org/3/genre/movie/list
-// ${genres.name}
-
 const inputSearchEl = document.getElementById('search_input');
 
 let query = '';
@@ -50,5 +33,3 @@ export async function fetchMovies(query, page) {
     console.log(error.status);
   }
 }
-// Exportujemy funkcję fetchMovies, która wysyła zapytanie do API z podanym zapytaniem (query) i numerem strony (page).
-// Otrzymujemy odpowiedź (response), która może być następnie przetworzona i wykorzystana w dalszej części kodu.

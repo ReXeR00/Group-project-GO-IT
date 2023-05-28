@@ -22,9 +22,9 @@ export const fetchMovies = async (query, page) => {
 
     let totalResults = result.data.total_results;
     if (totalResults > 0) {
-      searchMessageEl.classList.add('is-hidden'); // Wyświetl tekst błędu
+      searchMessageEl.classList.add('is-hidden'); 
     } else {
-      searchMessageEl.classList.remove('is-hidden'); // Ukryj tekst błędu
+      searchMessageEl.classList.remove('is-hidden'); 
     }
 
     return result;

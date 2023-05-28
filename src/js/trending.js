@@ -39,7 +39,9 @@ export const renderPopular = movies => {
   const movieElements = movies
     .map(movie => {
       const { poster_path, release_date, genre_ids, title, id } = movie;
-      const posterPath = `https://image.tmdb.org/t/p/w500${poster_path}`;
+      const posterPath = poster_path
+        ? `https://image.tmdb.org/t/p/w500${poster_path}`
+        : './images/Unfound-photos/file_not_found.jpg';
       const releaseYear = new Date(release_date).getFullYear();
       const genreNames = genre_ids
         .slice(0, 3)
@@ -62,4 +64,3 @@ export const renderPopular = movies => {
 
   moviesListEl.insertAdjacentHTML('beforeend', movieElements);
 };
-

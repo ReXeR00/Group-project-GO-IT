@@ -9,13 +9,12 @@ export async function fetchFilmDetailsById(id) {
       `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`,
       {
         params: {
-          // api_key: API_KEY,
+      
           movie_id: id,
         },
       },
       );
-      // console.log('fetchFilmDetailsById:', response.data);
-      // await fetchGenres();
+     
     return response;
     
   } catch (error) {

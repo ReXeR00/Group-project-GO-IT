@@ -12,6 +12,3 @@ const movieElement = `
   </li>
     `;
 
-// for (let i = 0; i < 20; i++) {
-//   moviesListEl.insertAdjacentHTML('afterbegin', movieElement);
-// }
