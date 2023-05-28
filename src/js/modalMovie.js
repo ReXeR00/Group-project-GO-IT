@@ -74,7 +74,7 @@ function createFilmModalMarkup(data) {
               <span class="film-info__text film-info__text--uppercase">${original_title}</span>
             </li>
             <li class="film-info__item">
-              <p class="film-info__lable">Genre</p>
+              <p class="film-info__label">Genre</p>
               <span class="film-info__text">${genreNames}</span>
             </li>
           </ul>
