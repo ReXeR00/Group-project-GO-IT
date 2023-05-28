@@ -1,5 +1,5 @@
 import { addPageNumber, dots, prevPage, nextPage } from './createPaginationElements';
-import { fetchMovies, query, searchInput } from './input-search';
+import { fetchMovies, query, searchInput } from './inputSearch';
 import { getPopular, renderPopular } from './trending';
 
 export const paginationEl = document.querySelector('.pagination');

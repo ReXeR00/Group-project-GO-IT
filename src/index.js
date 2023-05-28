@@ -1,8 +1,7 @@
-import './js/modal-team';
+import './js/modalTeam';
 import './js/trending';
 import './js/variables';
 import './js/modalMovie';
-import './js/input-search';
+import './js/inputSearch';
 import './js/pagination';
 
-// import './js/local-storage';

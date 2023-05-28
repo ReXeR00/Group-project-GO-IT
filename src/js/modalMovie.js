@@ -1,7 +1,7 @@
 import { fetchFilmDetailsById } from './fetchDetails';
 import axios from 'axios';
 import { loader, displayLoader } from './displayLoader';
-import { addToWatched, addToQueue } from './local-storage';
+import { addToWatched, addToQueue } from './localStorage';
 
 const refs = {
   galleryBox: document.querySelector('.movies__list'),
@@ -137,7 +137,6 @@ export async function addToWatchedHandler() {
   addToWatched(film);
 
   console.log('Film added to Watched:', film);
-  // return film;
 }
 
 async function addToQueueHandler() {
