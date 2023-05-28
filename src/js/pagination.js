@@ -19,13 +19,13 @@ export const showPagination = page => {
     if (totalPages <= 5) {
       prevPage();
 
-      for (let i = 0; i < totalPages; i++) {
+      [...Array(totalPages)].map((_, i) => {
         if (totalPages === 1) {
           paginationEl.innerHTML = '';
         } else {
           paginationEl.innerHTML = addPageNumber(i + 1);
         }
-      }
+      });
 
       if (totalPages != 1 && totalPages != 0) nextPage(currentPage);
     } else {
@@ -106,7 +106,7 @@ const changePages = (currentPage, totalPages) => {
       }, 250);
     });
 
-  document.querySelectorAll('.pagination__page').forEach(pageEls => {
+  [...document.querySelectorAll('.pagination__page')].map(pageEls => {
     pageEls.addEventListener('click', e => {
       const selectedPage = e.target.dataset.value;
       setTimeout(() => {

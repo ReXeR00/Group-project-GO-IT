@@ -80,18 +80,17 @@ export const renderfromLocalStorage = () => {
 
     if (data === null) return;
 
-    data.forEach(movieId => {
-      fetchFilmDetailsById(movieId)
-        .then(filmDetailsResponse => {
+    Promise.all(data.map(movieId => fetchFilmDetailsById(movieId)))
+      .then(filmDetailsResponses => {
+        const moviesElements = filmDetailsResponses.map(filmDetailsResponse => {
           const filmDetails = filmDetailsResponse.data;
-          const movieEl = createMovieElement(filmDetails);
-          moviesLibraryEl.insertAdjacentHTML('beforeend', movieEl);
-        })
-        .catch(error => {
-          console.log(error);
+          return createMovieElement(filmDetails);
         });
-    });
-    
+        moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   function createMovieElement(data) {

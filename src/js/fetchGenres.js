@@ -13,7 +13,7 @@ export const fetchGenres = async () => {
     });
     const genres = response.data.genres;
 
-    genres.forEach(genre => {
+    genres.map(genre => {
       genreList[genre.id] = genre.name;
     });
   } catch (error) {

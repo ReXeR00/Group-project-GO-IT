@@ -1,4 +1,4 @@
-import { renderfromLocalStorage } from './local-storage';
+import { renderfromLocalStorage } from './localStorage';
 
 import './local-storage';
 
