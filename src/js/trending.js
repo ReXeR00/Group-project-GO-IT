@@ -28,7 +28,7 @@ export const getPopular = async page => {
   }
 };
 
-if (window.location.pathname === '/index.html') {
+if (window.location.pathname !== '/library.html') {
   getPopular().then(movie => {
     renderPopular(movie.data.results);
     showPagination(movie);
