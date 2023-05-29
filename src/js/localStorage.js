@@ -1,4 +1,5 @@
 import { fetchFilmDetailsById } from './fetchDetails';
+import { drawPagination } from './pagination';
 const moviesLibraryEl = document.querySelector('.movies__library');
 
 export const localStorageKeys = {
@@ -75,22 +76,71 @@ export const renderfromLocalStorage = () => {
   handleButtonClick(watchedEl, localStorageKeys.WATCHED);
 
   function renderMovies(data) {
-    console.log('data', data)
+    console.log('liczba filmów w library', data);
     moviesLibraryEl.innerHTML = '';
 
     if (data === null) return;
 
-    Promise.all(data.map(movieId => fetchFilmDetailsById(movieId)))
-      .then(filmDetailsResponses => {
-        const moviesElements = filmDetailsResponses.map(filmDetailsResponse => {
-          const filmDetails = filmDetailsResponse.data;
-          return createMovieElement(filmDetails);
+    // Promise.all(data.map(movieId => fetchFilmDetailsById(movieId)))
+    //   .then(filmDetailsResponses => {
+    //     const moviesElements = filmDetailsResponses.map(filmDetailsResponse => {
+    //       const filmDetails = filmDetailsResponse.data;
+    //       return createMovieElement(filmDetails);
+    //     });
+    //     moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+
+    let pages = 0;
+    const pagesArr = [];
+    const currPage = [];
+
+    for (let i = 0; i < data.length; i = i + 20) {
+      pages = i / 20 + 1;
+      const page = data.slice(i, i + 20);
+      pagesArr.push(page);
+      currPage.push(pages);
+
+      console.log(`elementy na stronie ${pages} w library`, page);
+      // console.log(pages);
+      // console.log(i);
+      // console.log(`elementy na stronie ${pages} w library`, data.slice(i, i + 20));
+    }
+
+    let totalPages = pagesArr.length;
+    console.log('ilość stron', totalPages);
+    console.log('pagesObject', pagesArr);
+    console.log('current page', currPage);
+
+    const showLibraryMovies = () => {
+      Promise.all(
+        data.map(movieId => {
+          // pages = movieId;
+          // for (leg i = 0; i < movieId.length; i++)
+          // console.log('movieId', movieId.length);
+          return fetchFilmDetailsById(movieId);
+        }),
+      )
+        .then(filmDetailsResponses => {
+          console.log(filmDetailsResponses.length);
+
+          if (filmDetailsResponses.length > 20) filmDetailsResponses.length = 20;
+
+          const moviesElements = filmDetailsResponses.map(filmDetailsResponse => {
+            const filmDetails = filmDetailsResponse.data;
+            return createMovieElement(filmDetails);
+          });
+          moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
+        })
+        .catch(error => {
+          console.log(error);
         });
-        moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    };
+
+    showLibraryMovies();
+    drawPagination(totalPages, 1);
   }
 
   function createMovieElement(data) {

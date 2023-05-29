@@ -22,9 +22,9 @@ export const fetchMovies = async (query, page) => {
 
     let totalResults = result.data.total_results;
     if (totalResults > 0) {
-      searchMessageEl.classList.add('is-hidden'); 
+      searchMessageEl.classList.add('is-hidden');
     } else {
-      searchMessageEl.classList.remove('is-hidden'); 
+      searchMessageEl.classList.remove('is-hidden');
     }
 
     return result;
@@ -33,18 +33,20 @@ export const fetchMovies = async (query, page) => {
   }
 };
 
-searchInput.addEventListener('input', e => {
-  if (searchInput.value !== '') {
-    query = e.currentTarget.value;
-    if (query === '') return;
-    fetchMovies(query, page).then(movie => {
-      renderPopular(movie.data.results);
-      showPagination(movie);
-    });
-  } else {
-    getPopular().then(movie => {
-      renderPopular(movie.data.results);
-      showPagination(movie);
-    });
-  }
-});
+if (window.location.pathname === '/index.html') {
+  searchInput.addEventListener('input', e => {
+    if (searchInput.value !== '') {
+      query = e.currentTarget.value;
+      if (query === '') return;
+      fetchMovies(query, page).then(movie => {
+        renderPopular(movie.data.results);
+        showPagination(movie);
+      });
+    } else {
+      getPopular().then(movie => {
+        renderPopular(movie.data.results);
+        showPagination(movie);
+      });
+    }
+  });
+}

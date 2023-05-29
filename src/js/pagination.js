@@ -6,61 +6,64 @@ export const paginationEl = document.querySelector('.pagination');
 
 export const showPagination = page => {
   paginationEl.innerHTML = '';
-  let screenWidth = window.matchMedia('(max-width: 767px)');
 
   const currentPage = page.data.page;
   let totalPages = page.data.total_pages;
-  console.log('Pagination total pages', totalPages);
+  console.log('Pagination total pages', page);
+  console.log('Pagination total pages', page.data);
 
   if (totalPages > 20) totalPages = 20;
 
-  const drawPagination = () => {
-    paginationEl.innerHTML = '';
-    if (totalPages <= 5) {
-      prevPage();
+  drawPagination(totalPages, currentPage);
+  onresize = () => drawPagination(totalPages, currentPage);
+};
 
-      [...Array(totalPages)].map((_, i) => {
-        if (totalPages === 1) {
-          paginationEl.innerHTML = '';
-        } else {
-          paginationEl.innerHTML = addPageNumber(i + 1);
-        }
-      });
+export const drawPagination = (totalPages, currentPage) => {
+  paginationEl.innerHTML = '';
+  let screenWidth = window.matchMedia('(max-width: 767px)');
 
-      if (totalPages != 1 && totalPages != 0) nextPage(currentPage);
-    } else {
-      prevPage();
+  if (totalPages <= 5) {
+    prevPage();
 
-      if ((currentPage < 4 && screenWidth.matches) || !screenWidth.matches) addPageNumber('1');
-      if (currentPage > 4 && !screenWidth.matches) paginationEl.innerHTML += dots();
-      if (currentPage === totalPages) addPageNumber(currentPage - 4);
-      if (currentPage > 4 && currentPage > 18) addPageNumber(currentPage - 3);
-      if (currentPage > 3) addPageNumber(currentPage - 2);
-      if (currentPage > 2) addPageNumber(currentPage - 1);
-      if (currentPage != 1 && currentPage != totalPages) addPageNumber(currentPage);
-      if (currentPage < totalPages - 1) addPageNumber(currentPage + 1);
-      if (currentPage < totalPages - 2) addPageNumber(currentPage + 2);
-      if (currentPage < totalPages - 3 && currentPage < 3) addPageNumber(currentPage + 3);
-      if (currentPage === 1) addPageNumber(currentPage + 4);
-      if (currentPage < totalPages - 3 && !screenWidth.matches) paginationEl.innerHTML += dots();
-      if (
-        (totalPages > 1 && currentPage > 17 && screenWidth.matches) ||
-        (totalPages > 1 && !screenWidth.matches)
-      )
-        addPageNumber(totalPages);
+    // po co to?
+    [...Array(totalPages)].map((_, i) => {
+      if (totalPages === 1) {
+        paginationEl.innerHTML = '';
+      } else {
+        paginationEl.innerHTML = addPageNumber(i + 1);
+      }
+    });
 
-      nextPage(currentPage);
-    }
+    if (totalPages != 1 && totalPages != 0) nextPage(currentPage);
+  } else {
+    prevPage();
 
-    if (totalPages > 1) {
-      document.querySelector(`li[data-value="${currentPage}"]`).classList.add('active');
-    }
+    if ((currentPage < 4 && screenWidth.matches) || !screenWidth.matches) addPageNumber('1');
+    if (currentPage > 4 && !screenWidth.matches) dots();
+    if (currentPage === totalPages) addPageNumber(currentPage - 4);
+    if (currentPage > 4 && currentPage > 18) addPageNumber(currentPage - 3);
+    if (currentPage > 3) addPageNumber(currentPage - 2);
+    if (currentPage > 2) addPageNumber(currentPage - 1);
+    if (currentPage != 1 && currentPage != totalPages) addPageNumber(currentPage);
+    if (currentPage < totalPages - 1) addPageNumber(currentPage + 1);
+    if (currentPage < totalPages - 2) addPageNumber(currentPage + 2);
+    if (currentPage < totalPages - 3 && currentPage < 3) addPageNumber(currentPage + 3);
+    if (currentPage === 1) addPageNumber(currentPage + 4);
+    if (currentPage < totalPages - 3 && !screenWidth.matches) dots();
+    if (
+      (totalPages > 1 && currentPage > 17 && screenWidth.matches) ||
+      (totalPages > 1 && !screenWidth.matches)
+    )
+      addPageNumber(totalPages);
 
-    changePages(currentPage, totalPages);
-  };
+    nextPage(currentPage);
+  }
 
-  drawPagination();
-  onresize = () => drawPagination();
+  if (totalPages > 1) {
+    document.querySelector(`li[data-value="${currentPage}"]`).classList.add('active');
+  }
+
+  changePages(currentPage, totalPages);
 };
 
 const changePages = (currentPage, totalPages) => {
@@ -69,6 +72,7 @@ const changePages = (currentPage, totalPages) => {
       setTimeout(() => {
         scrollToTop();
 
+        // if (window.location.pathname === '/index.html') {
         if (searchInput.value === '') {
           getPopular(currentPage - 1)
             .then(movie => {
@@ -82,6 +86,7 @@ const changePages = (currentPage, totalPages) => {
             showPagination(movie);
           });
         }
+        // }
       }, 250);
     });
 
@@ -90,6 +95,7 @@ const changePages = (currentPage, totalPages) => {
       setTimeout(() => {
         scrollToTop();
 
+        // if (window.location.pathname === '/index.html') {
         if (searchInput.value === '') {
           getPopular(currentPage + 1)
             .then(movie => {
@@ -103,6 +109,7 @@ const changePages = (currentPage, totalPages) => {
             showPagination(movie);
           });
         }
+        // }
       }, 250);
     });
 
@@ -112,6 +119,7 @@ const changePages = (currentPage, totalPages) => {
       setTimeout(() => {
         scrollToTop();
 
+        // if (window.location.pathname === '/index.html') {
         if (searchInput.value === '') {
           getPopular(selectedPage)
             .then(movie => {
@@ -125,6 +133,7 @@ const changePages = (currentPage, totalPages) => {
             showPagination(movie);
           });
         }
+        // }
       }, 250);
     });
   });
