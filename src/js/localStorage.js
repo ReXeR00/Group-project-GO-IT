@@ -95,13 +95,11 @@ export const renderfromLocalStorage = () => {
 
     let pages = 0;
     const pagesArr = [];
-    const currPage = [];
 
     for (let i = 0; i < data.length; i = i + 20) {
       pages = i / 20 + 1;
       const page = data.slice(i, i + 20);
       pagesArr.push(page);
-      currPage.push(pages);
 
       console.log(`elementy na stronie ${pages} w library`, page);
       // console.log(pages);
@@ -112,11 +110,12 @@ export const renderfromLocalStorage = () => {
     let totalPages = pagesArr.length;
     console.log('ilość stron', totalPages);
     console.log('pagesObject', pagesArr);
-    console.log('current page', currPage);
+    let currentPage = 1;
 
     const showLibraryMovies = () => {
+      console.log(currentPage, pagesArr.length);
       Promise.all(
-        data.map(movieId => {
+        pagesArr[currentPage - 1].map(movieId => {
           // pages = movieId;
           // for (leg i = 0; i < movieId.length; i++)
           // console.log('movieId', movieId.length);
@@ -126,13 +125,20 @@ export const renderfromLocalStorage = () => {
         .then(filmDetailsResponses => {
           console.log(filmDetailsResponses.length);
 
-          if (filmDetailsResponses.length > 20) filmDetailsResponses.length = 20;
+          // if (filmDetailsResponses.length > 20) filmDetailsResponses.length = 20;
 
           const moviesElements = filmDetailsResponses.map(filmDetailsResponse => {
             const filmDetails = filmDetailsResponse.data;
             return createMovieElement(filmDetails);
           });
+          moviesLibraryEl.innerHTML = '';
           moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
+
+          drawPagination(totalPages, currentPage, page => {
+            console.log(currentPage);
+            currentPage = page;
+            showLibraryMovies();
+          });
         })
         .catch(error => {
           console.log(error);
@@ -140,7 +146,11 @@ export const renderfromLocalStorage = () => {
     };
 
     showLibraryMovies();
-    drawPagination(totalPages, 1);
+    drawPagination(totalPages, currentPage, page => {
+      console.log(currentPage);
+      currentPage = page;
+      showLibraryMovies();
+    });
   }
 
   function createMovieElement(data) {

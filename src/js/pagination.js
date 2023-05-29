@@ -18,7 +18,8 @@ export const showPagination = page => {
   onresize = () => drawPagination(totalPages, currentPage);
 };
 
-export const drawPagination = (totalPages, currentPage) => {
+export const drawPagination = (totalPages, currentPage, callback) => {
+  console.log('rerender');
   paginationEl.innerHTML = '';
   let screenWidth = window.matchMedia('(max-width: 767px)');
 
@@ -63,30 +64,33 @@ export const drawPagination = (totalPages, currentPage) => {
     document.querySelector(`li[data-value="${currentPage}"]`).classList.add('active');
   }
 
-  changePages(currentPage, totalPages);
+  changePages(currentPage, totalPages, callback);
 };
 
-const changePages = (currentPage, totalPages) => {
+const changePages = (currentPage, totalPages, callback) => {
+  console.log(currentPage);
   if (currentPage != 1)
     document.getElementById('prev').addEventListener('click', () => {
       setTimeout(() => {
         scrollToTop();
 
-        // if (window.location.pathname === '/index.html') {
-        if (searchInput.value === '') {
-          getPopular(currentPage - 1)
-            .then(movie => {
+        if (window.location.pathname === '/index.html') {
+          if (searchInput.value === '') {
+            getPopular(currentPage - 1)
+              .then(movie => {
+                renderPopular(movie.data.results);
+                showPagination(movie);
+              })
+              .catch(error => console.log(error));
+          } else {
+            fetchMovies(query, currentPage - 1).then(movie => {
               renderPopular(movie.data.results);
               showPagination(movie);
-            })
-            .catch(error => console.log(error));
-        } else {
-          fetchMovies(query, currentPage - 1).then(movie => {
-            renderPopular(movie.data.results);
-            showPagination(movie);
-          });
+            });
+          }
         }
-        // }
+
+        callback(currentPage - 1);
       }, 250);
     });
 
@@ -95,21 +99,22 @@ const changePages = (currentPage, totalPages) => {
       setTimeout(() => {
         scrollToTop();
 
-        // if (window.location.pathname === '/index.html') {
-        if (searchInput.value === '') {
-          getPopular(currentPage + 1)
-            .then(movie => {
+        if (window.location.pathname === '/index.html') {
+          if (searchInput.value === '') {
+            getPopular(currentPage + 1)
+              .then(movie => {
+                renderPopular(movie.data.results);
+                showPagination(movie);
+              })
+              .catch(error => console.log(error));
+          } else {
+            fetchMovies(query, currentPage + 1).then(movie => {
               renderPopular(movie.data.results);
               showPagination(movie);
-            })
-            .catch(error => console.log(error));
-        } else {
-          fetchMovies(query, currentPage + 1).then(movie => {
-            renderPopular(movie.data.results);
-            showPagination(movie);
-          });
+            });
+          }
         }
-        // }
+        callback(currentPage + 1);
       }, 250);
     });
 
@@ -119,21 +124,22 @@ const changePages = (currentPage, totalPages) => {
       setTimeout(() => {
         scrollToTop();
 
-        // if (window.location.pathname === '/index.html') {
-        if (searchInput.value === '') {
-          getPopular(selectedPage)
-            .then(movie => {
+        if (window.location.pathname === '/index.html') {
+          if (searchInput.value === '') {
+            getPopular(selectedPage)
+              .then(movie => {
+                renderPopular(movie.data.results);
+                showPagination(movie);
+              })
+              .catch(error => console.log(error));
+          } else {
+            fetchMovies(query, selectedPage).then(movie => {
               renderPopular(movie.data.results);
               showPagination(movie);
-            })
-            .catch(error => console.log(error));
-        } else {
-          fetchMovies(query, selectedPage).then(movie => {
-            renderPopular(movie.data.results);
-            showPagination(movie);
-          });
+            });
+          }
         }
-        // }
+        callback(selectedPage);
       }, 250);
     });
   });
