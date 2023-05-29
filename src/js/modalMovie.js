@@ -45,7 +45,9 @@ function createFilmModalMarkup(data) {
     poster_path,
     genres,
   } = data;
-  const posterPath = `https://image.tmdb.org/t/p/w500${poster_path}`;
+  const posterPath = poster_path
+    ? `https://image.tmdb.org/t/p/w500${poster_path}`
+    : 'https://www.cloudways.com/blog/wp-content/uploads/How-to-Create-Custom-Codeigniter-404-Not-Found-Page-1.jpg';
   const genreNames = genres.map(element => element.name).join(' ');
 
   return `
