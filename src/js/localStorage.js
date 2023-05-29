@@ -87,7 +87,17 @@ export const renderfromLocalStorage = () => {
 
     let currentPage = 1;
 
+    // if (totalPages === 0) return;
+
     const showLibraryMovies = () => {
+      if (totalPages < 1) {
+        document.querySelector('.pagination').style.display = 'none';
+
+        return;
+      } else {
+        document.querySelector('.pagination').style.display = 'flex';
+      }
+
       Promise.all(
         pagesArr[currentPage - 1].map(movieId => {
           return fetchFilmDetailsById(movieId);
@@ -102,7 +112,9 @@ export const renderfromLocalStorage = () => {
           moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
 
           drawPagination(totalPages, currentPage, page => {
-            currentPage = page;
+            currentPage = +page;
+            console.log(currentPage);
+
             showLibraryMovies();
           });
         })
@@ -112,10 +124,15 @@ export const renderfromLocalStorage = () => {
     };
 
     showLibraryMovies();
-    drawPagination(totalPages, currentPage, page => {
-      currentPage = page;
-      showLibraryMovies();
-    });
+    console.log(totalPages);
+
+    if (totalPages !== 0) {
+      drawPagination(totalPages, currentPage, page => {
+        currentPage = page;
+        console.log(currentPage);
+        showLibraryMovies();
+      });
+    }
   }
 
   function createMovieElement(data) {
