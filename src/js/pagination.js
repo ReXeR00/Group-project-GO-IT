@@ -9,8 +9,6 @@ export const showPagination = page => {
 
   const currentPage = page.data.page;
   let totalPages = page.data.total_pages;
-  console.log('Pagination total pages', page);
-  console.log('Pagination total pages', page.data);
 
   if (totalPages > 20) totalPages = 20;
 
@@ -19,14 +17,12 @@ export const showPagination = page => {
 };
 
 export const drawPagination = (totalPages, currentPage, callback) => {
-  console.log('rerender');
   paginationEl.innerHTML = '';
   let screenWidth = window.matchMedia('(max-width: 767px)');
 
   if (totalPages <= 5) {
     prevPage();
 
-    // po co to?
     [...Array(totalPages)].map((_, i) => {
       if (totalPages === 1) {
         paginationEl.innerHTML = '';
@@ -68,7 +64,6 @@ export const drawPagination = (totalPages, currentPage, callback) => {
 };
 
 const changePages = (currentPage, totalPages, callback) => {
-  console.log(currentPage);
   if (currentPage != 1)
     document.getElementById('prev').addEventListener('click', () => {
       setTimeout(() => {
@@ -90,7 +85,7 @@ const changePages = (currentPage, totalPages, callback) => {
           }
         }
 
-        callback(currentPage - 1);
+        if (window.location.pathname === '/library.html') callback(currentPage - 1);
       }, 250);
     });
 
@@ -114,7 +109,7 @@ const changePages = (currentPage, totalPages, callback) => {
             });
           }
         }
-        callback(currentPage + 1);
+        if (window.location.pathname === '/library.html') callback(currentPage + 1);
       }, 250);
     });
 
@@ -139,7 +134,7 @@ const changePages = (currentPage, totalPages, callback) => {
             });
           }
         }
-        callback(selectedPage);
+        if (window.location.pathname === '/library.html') callback(selectedPage);
       }, 250);
     });
   });

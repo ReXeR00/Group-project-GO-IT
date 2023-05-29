@@ -33,9 +33,6 @@ export const addToWatched = film => {
     if (!watchedFilmIds.includes(film.id)) {
       watchedFilmIds.push(film.id);
       setToLocalStorage(localStorageKeys.WATCHED, watchedFilmIds);
-      console.log('Film added to Watched:', film);
-    } else {
-      console.log('Film already exists in Watched:', film);
     }
   } catch (error) {
     console.log(error.message);
@@ -49,9 +46,6 @@ export const addToQueue = film => {
     if (!filmQueueIds.includes(film.id)) {
       filmQueueIds.push(film.id);
       setToLocalStorage(localStorageKeys.QUEUE, filmQueueIds);
-      console.log('Film added to Queue:', film);
-    } else {
-      console.log('Film already exists in Queue:', film);
     }
   } catch (error) {
     console.log(error.message);
@@ -76,22 +70,9 @@ export const renderfromLocalStorage = () => {
   handleButtonClick(watchedEl, localStorageKeys.WATCHED);
 
   function renderMovies(data) {
-    console.log('liczba filmów w library', data);
     moviesLibraryEl.innerHTML = '';
 
     if (data === null) return;
-
-    // Promise.all(data.map(movieId => fetchFilmDetailsById(movieId)))
-    //   .then(filmDetailsResponses => {
-    //     const moviesElements = filmDetailsResponses.map(filmDetailsResponse => {
-    //       const filmDetails = filmDetailsResponse.data;
-    //       return createMovieElement(filmDetails);
-    //     });
-    //     moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
 
     let pages = 0;
     const pagesArr = [];
@@ -100,33 +81,19 @@ export const renderfromLocalStorage = () => {
       pages = i / 20 + 1;
       const page = data.slice(i, i + 20);
       pagesArr.push(page);
-
-      console.log(`elementy na stronie ${pages} w library`, page);
-      // console.log(pages);
-      // console.log(i);
-      // console.log(`elementy na stronie ${pages} w library`, data.slice(i, i + 20));
     }
 
     let totalPages = pagesArr.length;
-    console.log('ilość stron', totalPages);
-    console.log('pagesObject', pagesArr);
+
     let currentPage = 1;
 
     const showLibraryMovies = () => {
-      console.log(currentPage, pagesArr.length);
       Promise.all(
         pagesArr[currentPage - 1].map(movieId => {
-          // pages = movieId;
-          // for (leg i = 0; i < movieId.length; i++)
-          // console.log('movieId', movieId.length);
           return fetchFilmDetailsById(movieId);
         }),
       )
         .then(filmDetailsResponses => {
-          console.log(filmDetailsResponses.length);
-
-          // if (filmDetailsResponses.length > 20) filmDetailsResponses.length = 20;
-
           const moviesElements = filmDetailsResponses.map(filmDetailsResponse => {
             const filmDetails = filmDetailsResponse.data;
             return createMovieElement(filmDetails);
@@ -135,7 +102,6 @@ export const renderfromLocalStorage = () => {
           moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
 
           drawPagination(totalPages, currentPage, page => {
-            console.log(currentPage);
             currentPage = page;
             showLibraryMovies();
           });
@@ -147,7 +113,6 @@ export const renderfromLocalStorage = () => {
 
     showLibraryMovies();
     drawPagination(totalPages, currentPage, page => {
-      console.log(currentPage);
       currentPage = page;
       showLibraryMovies();
     });
