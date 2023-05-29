@@ -2,5 +2,21 @@
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  gap: 16px;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (min-width: $tablet) {
+  .movies__library {
+    gap: 20px;
+    flex-flow: wrap;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  .movies__library {
+    gap: 16px;
+  }
 }
