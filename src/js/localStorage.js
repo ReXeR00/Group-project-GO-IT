@@ -1,4 +1,5 @@
 import { fetchFilmDetailsById } from './fetchDetails';
+import { drawPagination } from './pagination';
 const moviesLibraryEl = document.querySelector('.movies__library');
 
 export const localStorageKeys = {
@@ -32,9 +33,6 @@ export const addToWatched = film => {
     if (!watchedFilmIds.includes(film.id)) {
       watchedFilmIds.push(film.id);
       setToLocalStorage(localStorageKeys.WATCHED, watchedFilmIds);
-      console.log('Film added to Watched:', film);
-    } else {
-      console.log('Film already exists in Watched:', film);
     }
   } catch (error) {
     console.log(error.message);
@@ -48,9 +46,6 @@ export const addToQueue = film => {
     if (!filmQueueIds.includes(film.id)) {
       filmQueueIds.push(film.id);
       setToLocalStorage(localStorageKeys.QUEUE, filmQueueIds);
-      console.log('Film added to Queue:', film);
-    } else {
-      console.log('Film already exists in Queue:', film);
     }
   } catch (error) {
     console.log(error.message);
@@ -75,22 +70,52 @@ export const renderfromLocalStorage = () => {
   handleButtonClick(watchedEl, localStorageKeys.WATCHED);
 
   function renderMovies(data) {
-    console.log('data', data);
     moviesLibraryEl.innerHTML = '';
 
     if (data === null) return;
 
-    Promise.all(data.map(movieId => fetchFilmDetailsById(movieId)))
-      .then(filmDetailsResponses => {
-        const moviesElements = filmDetailsResponses.map(filmDetailsResponse => {
-          const filmDetails = filmDetailsResponse.data;
-          return createMovieElement(filmDetails);
+    let pages = 0;
+    const pagesArr = [];
+
+    for (let i = 0; i < data.length; i = i + 20) {
+      pages = i / 20 + 1;
+      const page = data.slice(i, i + 20);
+      pagesArr.push(page);
+    }
+
+    let totalPages = pagesArr.length;
+
+    let currentPage = 1;
+
+    const showLibraryMovies = () => {
+      Promise.all(
+        pagesArr[currentPage - 1].map(movieId => {
+          return fetchFilmDetailsById(movieId);
+        }),
+      )
+        .then(filmDetailsResponses => {
+          const moviesElements = filmDetailsResponses.map(filmDetailsResponse => {
+            const filmDetails = filmDetailsResponse.data;
+            return createMovieElement(filmDetails);
+          });
+          moviesLibraryEl.innerHTML = '';
+          moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
+
+          drawPagination(totalPages, currentPage, page => {
+            currentPage = page;
+            showLibraryMovies();
+          });
+        })
+        .catch(error => {
+          console.log(error);
         });
-        moviesLibraryEl.insertAdjacentHTML('beforeend', moviesElements.join(''));
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    };
+
+    showLibraryMovies();
+    drawPagination(totalPages, currentPage, page => {
+      currentPage = page;
+      showLibraryMovies();
+    });
   }
 
   function createMovieElement(data) {

@@ -28,10 +28,12 @@ export const getPopular = async page => {
   }
 };
 
-getPopular().then(movie => {
-  renderPopular(movie.data.results);
-  showPagination(movie);
-});
+if (window.location.pathname === '/index.html') {
+  getPopular().then(movie => {
+    renderPopular(movie.data.results);
+    showPagination(movie);
+  });
+}
 
 export const renderPopular = movies => {
   moviesListEl.innerHTML = '';

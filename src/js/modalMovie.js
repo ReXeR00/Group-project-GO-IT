@@ -18,7 +18,6 @@ async function galleryBoxClick(event) {
   }
   const galleryItem = event.target.closest('[data-id]');
   const filmId = galleryItem.dataset.id;
-  console.log('ID filmu:', filmId);
 
   let searchIdDetails = null;
   if (refs.searchId.length > 0) {
@@ -103,7 +102,6 @@ function createFilmModalMarkup(data) {
 }
 
 function renderFilmModal(data) {
-  console.log('renderFilmModal data:', data);
   const fiimModalMarkup = createFilmModalMarkup(data);
   refs.filmModal.insertAdjacentHTML('beforeend', fiimModalMarkup);
   displayLoader(loader);
@@ -137,8 +135,6 @@ export async function addToWatchedHandler() {
   };
 
   addToWatched(film);
-
-  console.log('Film added to Watched:', film);
 }
 
 async function addToQueueHandler() {
@@ -151,6 +147,4 @@ async function addToQueueHandler() {
   };
 
   addToQueue(film);
-
-  console.log('Film added to Queue:', film);
 }
