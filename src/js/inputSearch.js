@@ -33,7 +33,7 @@ export const fetchMovies = async (query, page) => {
   }
 };
 
-if (window.location.pathname === '/index.html') {
+if (window.location.pathname !== '/library.html') {
   searchInput.addEventListener('input', e => {
     if (searchInput.value !== '') {
       query = e.currentTarget.value;

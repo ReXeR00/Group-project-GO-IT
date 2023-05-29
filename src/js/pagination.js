@@ -69,7 +69,7 @@ const changePages = (currentPage, totalPages, callback) => {
       setTimeout(() => {
         scrollToTop();
 
-        if (window.location.pathname === '/index.html') {
+        if (window.location.pathname !== '/library.html') {
           if (searchInput.value === '') {
             getPopular(currentPage - 1)
               .then(movie => {
@@ -94,7 +94,7 @@ const changePages = (currentPage, totalPages, callback) => {
       setTimeout(() => {
         scrollToTop();
 
-        if (window.location.pathname === '/index.html') {
+        if (window.location.pathname !== '/library.html') {
           if (searchInput.value === '') {
             getPopular(currentPage + 1)
               .then(movie => {
@@ -119,7 +119,7 @@ const changePages = (currentPage, totalPages, callback) => {
       setTimeout(() => {
         scrollToTop();
 
-        if (window.location.pathname === '/index.html') {
+        if (window.location.pathname !== '/library.html') {
           if (searchInput.value === '') {
             getPopular(selectedPage)
               .then(movie => {
