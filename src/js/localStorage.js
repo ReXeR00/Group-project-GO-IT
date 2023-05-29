@@ -75,7 +75,7 @@ export const renderfromLocalStorage = () => {
   handleButtonClick(watchedEl, localStorageKeys.WATCHED);
 
   function renderMovies(data) {
-    console.log('data', data)
+    console.log('data', data);
     moviesLibraryEl.innerHTML = '';
 
     if (data === null) return;
@@ -95,7 +95,9 @@ export const renderfromLocalStorage = () => {
 
   function createMovieElement(data) {
     const { id, title, poster_path, release_date, genres } = data;
-    const posterPath = `https://image.tmdb.org/t/p/w500${poster_path}`;
+    const posterPath = poster_path
+    ? `https://image.tmdb.org/t/p/w500${poster_path}`
+    : 'https://www.cloudways.com/blog/wp-content/uploads/How-to-Create-Custom-Codeigniter-404-Not-Found-Page-1.jpg';
     const releaseYear = new Date(release_date).getFullYear();
     const genreNames = genres
       .slice(0, 3)

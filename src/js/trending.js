@@ -41,7 +41,7 @@ export const renderPopular = movies => {
       const { poster_path, release_date, genre_ids, title, id } = movie;
       const posterPath = poster_path
         ? `https://image.tmdb.org/t/p/w500${poster_path}`
-        : './images/Unfound-photos/file_not_found.jpg';
+        : 'https://www.cloudways.com/blog/wp-content/uploads/How-to-Create-Custom-Codeigniter-404-Not-Found-Page-1.jpg';
       const releaseYear = new Date(release_date).getFullYear();
       const genreNames = genre_ids
         .slice(0, 3)
