@@ -1,33 +1,7 @@
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 import { fetchFilmDetailsById } from './fetchDetails';
-import axios from 'axios';
-import { loader, displayLoader } from './displayLoader';
-import { addToWatched, addToQueue } from './local-storage';
-
-// aby dodać basicLightbox
-// terminal: npm install basiclightbox
-
-export const API_KEY = `9cd3003f00fa34df086a65205d0cd538`;
-const BASE_URL = 'https://api.themoviedb.org/3';
-
-// funkcja łapania trainerów
-
-async function fetchTrailerById(id) {
-  const url = new URL(`${BASE_URL}/movie/${id}/videos`);
-  url.searchParams.append('api_key', API_KEY);
-
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-}
-
-// kod modalMovie.js z przróbką:
-
-import * as basicLightbox from 'basiclightbox';
-import 'basiclightbox/dist/basicLightbox.min.css';
-import { fetchFilmDetailsById } from './fetchDetails';
-import { fetchTrailerById } from './trailer';
+import { fetchTrailerById } from './trainer';
 import { loader, displayLoader } from './displayLoader';
 import { addToWatched, addToQueue } from './local-storage';
 
@@ -57,16 +31,15 @@ async function galleryBoxClick(event) {
   const filmDetailsResponse = await fetchFilmDetailsById(filmId);
   const filmDetails = filmDetailsResponse.data;
 
+  const trailerData = await fetchTrailerById(filmId);
+  const trailerKey = trailerData.results[0]?.key; // Pobierz pierwszy klucz trailera z danych
+
+  filmDetails.trailerKey = trailerKey; // Dodaj klucz trailera do obiektu filmDetails
+
   refs.filmDetails = filmDetails;
   refs.searchId.push(filmDetails);
   refs.filmModal.classList.remove('is-hidden');
   renderFilmModal(refs.filmDetails);
-
-  const trailerData = await fetchTrailerById(filmId);
-  if (trailerData.results.length > 0) {
-    const trailerKey = trailerData.results[0].key;
-    openTrailer(trailerKey);
-  }
 }
 
 function createFilmModalMarkup(data) {
@@ -90,27 +63,12 @@ function createFilmModalMarkup(data) {
       <article>
         <div class="film__content">
           <h2 class="film__title">${title}</h2>
-          <ul class="film-info">
-            <li class="film-info__item">
-              <p class="film-info__label">Vote / Votes</p>
-              <div class="film-vote">
-                <span class="film-vote__label film-vote__label--orange">${vote_average}</span>
-                <span>/</span>
-                <span class="film-vote__label">${vote_count}</span>
-              </div>
-            </li>
-            <li class="film-info__item">
-              <p class="film-info__label">Popularity</p>
-              <span class="film-info__text">${popularity}</span>
-            </li>
-            <li class="film-info__item">
-              <p class="film-info__label">Original Title</p>
-              <span class="film-info__text film-info__text--uppercase">${original_title}</span>
-            </li>
-            <li class="film-info__item">
-              <p class="film-info__lable">Genre</p>
-              <span class="film-info__text">${genreNames}</span>
-            </li>
+          <ul class="film__details">
+            <li><strong>Original Title:</strong> ${original_title}</li>
+            <li><strong>Genres:</strong> ${genreNames}</li>
+            <li><strong>Vote Average:</strong> ${vote_average}</li>
+            <li><strong>Vote Count:</strong> ${vote_count}</li>
+            <li><strong>Popularity:</strong> ${popularity}</li>
           </ul>
           <div class="film-description">
             <h3 class="film-description__title">About</h3>
@@ -139,29 +97,6 @@ function closeModal() {
   refs.filmModal.innerHTML = '';
 }
 
-function openTrailer(trailerKey) {
-  const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
-  const trailerLightbox = basicLightbox.create(`
-    <div class="lightbox-content">
-      <iframe width="560" height="315" src="${trailerUrl}" frameborder="0" allowfullscreen></iframe>
-    </div>
-  `);
-
-  const closeLightbox = () => {
-    trailerLightbox.close();
-  };
-  trailerLightbox.on('show', () => {
-    window.addEventListener('keydown', closeLightbox);
-    document.addEventListener('click', closeLightbox);
-  });
-  trailerLightbox.on('close', () => {
-    window.removeEventListener('keydown', closeLightbox);
-    document.removeEventListener('click', closeLightbox);
-  });
-
-  trailerLightbox.show();
-}
-
 async function renderFilmModal(data) {
   console.log('renderFilmModal data:', data);
   const filmModalMarkup = createFilmModalMarkup(data);
@@ -186,6 +121,13 @@ async function renderFilmModal(data) {
 
   const addToQueueBtn = document.querySelector('[button-add-queue]');
   addToQueueBtn.addEventListener('click', addToQueueHandler);
+}
+
+function openTrailer(trailerKey) {
+  if (trailerKey) {
+    const trailerUrl = `https://www.youtube.com/watch?v=${trailerKey}`;
+    window.open(trailerUrl, '_blank');
+  }
 }
 
 async function addToWatchedHandler() {
@@ -215,3 +157,5 @@ async function addToQueueHandler() {
 
   console.log('Film added to Queue:', film);
 }
+
+export { closeModal };

@@ -4,7 +4,7 @@
   "description": "",
   "homepage": "https://github.com/ReXeR00/Group-project-GO-IT",
   "scripts": {
-    "dev": "parcel src/*.html",
+    "dev": "parcel src/*.html --no-cache",
     "build": "parcel build src/*.html --public-url /Group-project-GO-IT/"
   },
   "repository": {
