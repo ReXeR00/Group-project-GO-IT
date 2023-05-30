@@ -262,9 +262,11 @@
   border-radius: 5px;
   &:hover {
     background-color: $orange;
+    color: white;
   }
   &:focus {
     background-color: $orange;
+    color: white;
   }
 
   &:hover .icon-close,
