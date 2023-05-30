@@ -53,7 +53,7 @@
     width: 806px;
     padding: 40px 12px;
   }
-  
+
   @media screen and (max-width: $tablet) {
     padding: 24px 16px;
   }
@@ -74,7 +74,7 @@
     max-width: 375px;
     max-height: 478px;
   }
-  
+
   @media screen and (max-width: $tablet) {
     width: 100%;
     max-height: 300px;
@@ -221,7 +221,6 @@
 }
 
 .film-button__primary {
-
   box-sizing: border-box;
 
   min-width: 110px;
@@ -255,13 +254,18 @@
   top: 8px;
   right: 8px;
 
-
   width: 30px;
   height: 30px;
   border: none;
 
   background-color: $white;
   border-radius: 5px;
+  &:hover {
+    background-color: $orange;
+  }
+  &:focus {
+    background-color: $orange;
+  }
 
   &:hover .icon-close,
   &:focus .icon-close {
