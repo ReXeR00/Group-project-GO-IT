@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { genreList, fetchGenres } from './fetchGenres';
 import { URL, API_KEY, API_trendingMovies } from './variables';
-
 import { showPagination } from './pagination';
-
 import { displayLoader, loader } from './displayLoader';
+import { location } from './pagination';
 
 const moviesListEl = document.querySelector('.movies__list');
 
@@ -28,7 +27,8 @@ export const getPopular = async page => {
   }
 };
 
-if (window.location.pathname !== '/library.html') {
+if (window.location.pathname.split('/').at(-1) !== 'library.html') {
+  console.log(window.location.pathname);
   getPopular().then(movie => {
     renderPopular(movie.data.results);
     showPagination(movie);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { URL, API_KEY, API_searchMovies } from './variables';
 import { renderPopular, getPopular } from './trending';
-import { showPagination } from './pagination';
+import { showPagination, location } from './pagination';
 
 export const searchInput = document.getElementById('search_input');
 const searchMessageEl = document.getElementById('search__message');
@@ -33,7 +33,7 @@ export const fetchMovies = async (query, page) => {
   }
 };
 
-if (window.location.pathname !== '/library.html') {
+if (window.location.pathname.split('/').at(-1) !== 'library.html') {
   searchInput.addEventListener('input', e => {
     if (searchInput.value !== '') {
       query = e.currentTarget.value;

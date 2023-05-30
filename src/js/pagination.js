@@ -3,6 +3,7 @@ import { fetchMovies, query, searchInput } from './inputSearch';
 import { getPopular, renderPopular } from './trending';
 
 export const paginationEl = document.querySelector('.pagination');
+export const location = window.location.pathname.split('/').at(-1);
 
 export const showPagination = page => {
   paginationEl.innerHTML = '';
@@ -69,7 +70,7 @@ const changePages = (currentPage, totalPages, callback) => {
       setTimeout(() => {
         scrollToTop();
 
-        if (window.location.pathname !== '/library.html') {
+        if (window.location.pathname.split('/').at(-1) !== 'library.html') {
           if (searchInput.value === '') {
             getPopular(currentPage - 1)
               .then(movie => {
@@ -85,7 +86,8 @@ const changePages = (currentPage, totalPages, callback) => {
           }
         }
 
-        if (window.location.pathname === '/library.html') callback(currentPage - 1);
+        if (window.location.pathname.split('/').at(-1) === 'library.html')
+          callback(currentPage - 1);
       }, 250);
     });
 
@@ -94,7 +96,7 @@ const changePages = (currentPage, totalPages, callback) => {
       setTimeout(() => {
         scrollToTop();
 
-        if (window.location.pathname !== '/library.html') {
+        if (window.location.pathname.split('/').at(-1) !== 'library.html') {
           if (searchInput.value === '') {
             getPopular(currentPage + 1)
               .then(movie => {
@@ -109,7 +111,8 @@ const changePages = (currentPage, totalPages, callback) => {
             });
           }
         }
-        if (window.location.pathname === '/library.html') callback(currentPage + 1);
+        if (window.location.pathname.split('/').at(-1) === 'library.html')
+          callback(currentPage + 1);
       }, 250);
     });
 
@@ -119,7 +122,7 @@ const changePages = (currentPage, totalPages, callback) => {
       setTimeout(() => {
         scrollToTop();
 
-        if (window.location.pathname !== '/library.html') {
+        if (window.location.pathname.split('/').at(-1) !== 'library.html') {
           if (searchInput.value === '') {
             getPopular(selectedPage)
               .then(movie => {
@@ -134,7 +137,7 @@ const changePages = (currentPage, totalPages, callback) => {
             });
           }
         }
-        if (window.location.pathname === '/library.html') callback(selectedPage);
+        if (window.location.pathname.split('/').at(-1) === 'library.html') callback(selectedPage);
       }, 250);
     });
   });
