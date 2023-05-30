@@ -52,7 +52,7 @@ function createFilmModalMarkup(data) {
 
   return `
     <div class="film-modal">
-      <button class="button-close" type="button" button-modal-close>X</button>
+      <button class="button-close" type="button" button-modal-close>&#10006</button>
       <img class="film__image" src="${posterPath}" alt="Film Image" />
       <article>
         <div class="film__content">
