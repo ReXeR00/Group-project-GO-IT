@@ -124,12 +124,12 @@ export const renderfromLocalStorage = () => {
     };
 
     showLibraryMovies();
-    console.log(totalPages);
+    
 
     if (totalPages !== 0) {
       drawPagination(totalPages, currentPage, page => {
         currentPage = page;
-        console.log(currentPage);
+  
         showLibraryMovies();
       });
     }

@@ -98,10 +98,6 @@ function renderFilmModal(data) {
   closeBtn.addEventListener('click', closeModal);
   window.addEventListener('keydown', closeModal);
   window.addEventListener('click', closeModal);
-  const addToWatchedBtn = document.querySelector('[button-add-watch]');
-  addToWatchedBtn.addEventListener('click', addToWatchedHandler);
-  const addToQueueBtn = document.querySelector('[button-add-queue]');
-  addToQueueBtn.addEventListener('click', addToQueueHandler);
 }
 
 function closeModal() {
