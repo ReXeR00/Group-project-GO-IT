@@ -87,8 +87,6 @@ export const renderfromLocalStorage = () => {
 
     let currentPage = 1;
 
-    // if (totalPages === 0) return;
-
     const showLibraryMovies = () => {
       if (totalPages < 1) {
         document.querySelector('.pagination').style.display = 'none';
